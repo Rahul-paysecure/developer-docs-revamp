@@ -1,0 +1,27 @@
+{
+  "name": "paysecure-docs-react",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Paysecure Developer Documentation — React-native Vite application",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "verify": "node scripts/verify-structured-content.mjs && node scripts/verify-react.mjs && node scripts/verify-curl.mjs && node scripts/verify-content-editor.mjs",
+    "build:paysecure": "VITE_TENANT=paysecure vite build --outDir builds/paysecure --emptyOutDir",
+    "build:northpay": "VITE_TENANT=northpay vite build --outDir builds/northpay --emptyOutDir",
+    "build:tenants": "npm run build:paysecure && npm run build:northpay",
+    "audit:postman": "node scripts/audit-postman-parity.mjs",
+    "leak-scan": "node scripts/leak-scan.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.8"
+  }
+}

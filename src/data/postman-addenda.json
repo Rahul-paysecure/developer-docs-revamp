@@ -1,0 +1,1683 @@
+[
+  {
+    "slug": "api-cards",
+    "id": "live-collection-1",
+    "title": "Create a card purchase",
+    "description": "Create the purchase object before initiating card payment.",
+    "source": "Payment Methods > 💳 Card Payments > APIs > Purchase",
+    "method": "POST",
+    "url": "/purchases",
+    "config": {
+      "fields": [
+        {
+          "k": "client.email",
+          "v": "user@example.com",
+          "req": false
+        },
+        {
+          "k": "client.street_address",
+          "v": "1 Test Street",
+          "req": false
+        },
+        {
+          "k": "client.city",
+          "v": "Jaipur",
+          "req": false
+        },
+        {
+          "k": "client.full_name",
+          "v": "Test User",
+          "req": false
+        },
+        {
+          "k": "client.zip_code",
+          "v": "10001",
+          "req": false
+        },
+        {
+          "k": "client.country",
+          "v": "IN",
+          "req": false
+        },
+        {
+          "k": "client.date_of_birth",
+          "v": "1990-01-01",
+          "req": false
+        },
+        {
+          "k": "client.stateCode",
+          "v": "SP",
+          "req": false
+        },
+        {
+          "k": "client.phone",
+          "v": "+15555550123",
+          "req": false
+        },
+        {
+          "k": "purchase.currency",
+          "v": "EUR",
+          "req": false
+        },
+        {
+          "k": "purchase.products[0].name",
+          "v": "Test User",
+          "req": false
+        },
+        {
+          "k": "purchase.products[0].price",
+          "v": "5",
+          "req": false
+        },
+        {
+          "k": "merchantRef",
+          "v": "order-12345",
+          "req": false
+        },
+        {
+          "k": "paymentMethod",
+          "v": "MASTER",
+          "req": false
+        },
+        {
+          "k": "brand_id",
+          "v": "{{BrandId}}",
+          "req": false
+        },
+        {
+          "k": "success_redirect",
+          "v": "https://merchant.example/success-redirect",
+          "req": false
+        },
+        {
+          "k": "pending_redirect",
+          "v": "https://merchant.example/pending-redirect",
+          "req": false
+        },
+        {
+          "k": "failure_redirect",
+          "v": "https://merchant.example/failure-redirect",
+          "req": false
+        },
+        {
+          "k": "success_callback",
+          "v": "https://merchant.example/success-callback",
+          "req": false
+        },
+        {
+          "k": "failure_callback",
+          "v": "https://merchant.example/failure-callback",
+          "req": false
+        }
+      ],
+      "status": "202 Accepted",
+      "response": {
+        "purchaseId": "6a1d26a3d373e5fd3c44ae14",
+        "client": {
+          "customerId": "NA",
+          "email": "user@example.com",
+          "phone": "+15555550123",
+          "street_address": "1 Test Street",
+          "country": "IN",
+          "city": "123",
+          "zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "stateCode": "ca"
+        },
+        "updated_on": 1780295331,
+        "type": "purchase",
+        "paymentMethod": "MASTER,VISA,JCB,VIRTUAL-CARD,MOBILEMONEY,UPI-INTENT,UPI-QR,INTERAC-E-TRANSFER,INTERAC-REQUEST-MONEY,INTERAC-EXPRESS,PIX,FawryPay,OPEN-BANKING,SPEI",
+        "amountUnit": "MAJOR",
+        "errorMsg": "",
+        "errorCode": "NA",
+        "force_recurring": false,
+        "created_on": 1780295331,
+        "merchantRef": "user@example.com",
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 10,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 10,
+          "requestAmount": 10,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "taxAmount": 0,
+          "taxPercent": 0,
+          "request_client_details": [],
+          "email_message": "user@example.com"
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {}
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {},
+          "country": "",
+          "attempts": []
+        },
+        "status": "CREATED",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1780295331
+          }
+        ],
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS1172",
+        "issued": "2026-06-01",
+        "due": 1780295331,
+        "refund_upto": 0,
+        "cc_descriptor": "",
+        "fraudScore": "NA",
+        "trustScore": "NA",
+        "extraFee": "0",
+        "totalRefunded": 0,
+        "paidOn": 0,
+        "receivedAmt": 0,
+        "taxAmount": 0,
+        "surcharge": 0,
+        "surchargeType": "",
+        "sessionId": "",
+        "refund_availability": "NONE",
+        "refundable_amount": 0,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "pending_redirect": "https://merchant.example/pending-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "failure_callback": "https://merchant.example/failure-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "https://test4.paymentsclub.net/payments/c3f2eee71c5824b75c7b52ff41e76814/",
+        "direct_post_url": "https://test4.paymentsclub.net/api/v1/p/6a1d26a3d373e5fd3c44ae14/",
+        "payoutProcess": false
+      },
+      "sourceExampleGap": {
+        "missing": ["error"],
+        "reason": "The merchant-facing Postman request has no saved error response; no response was inferred during migration."
+      }
+    }
+  },
+  {
+    "slug": "api-cards",
+    "id": "live-collection-2",
+    "title": "Initiate payment from the customer browser",
+    "description": "Open this endpoint from the customer browser after creating the purchase.",
+    "source": "Payment Methods > 💳 Card Payments > APIs > Payment (To be initiated From client browser)",
+    "method": "GET",
+    "url": "/payment/{purchaseId}",
+    "config": {
+      "fields": [],
+      "sourceExampleGap": {
+        "missing": ["success"],
+        "reason": "The merchant-facing Postman request has no saved success response; no response was inferred during migration."
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Only purchases that can be paid for can be initiated for payment.",
+        "code": "transaction_error"
+      }
+    }
+  },
+  {
+    "slug": "api-cards",
+    "id": "live-collection-3",
+    "title": "Get card purchase status",
+    "description": "Retrieve the latest card purchase state.",
+    "source": "Payment Methods > 💳 Card Payments > APIs > Get Status",
+    "method": "GET",
+    "url": "/purchases/{purchaseId}",
+    "config": {
+      "fields": [],
+      "status": "202 Accepted",
+      "response": {
+        "purchaseId": "64bfdb7df63e36669499e82f",
+        "client": {
+          "bank_account": "",
+          "bank_code": "",
+          "email": "user@example.com",
+          "phone": "+15555550123",
+          "full_name": "Test User",
+          "date_of_birth": "1990-01-01",
+          "personal_code": "",
+          "street_address": "1 Test Street",
+          "country": "IN",
+          "city": "123",
+          "zip_code": "10001",
+          "shipping_street_address": "1 Test Street",
+          "shipping_country": "",
+          "shipping_city": "",
+          "shipping_zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": "",
+          "stateCode": "ca"
+        },
+        "updated_on": 1690296521,
+        "type": "purchase",
+        "force_recurring": false,
+        "created_on": 1690295168,
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 9,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 9,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "request_client_details": [],
+          "timezone": "America/Edmonton",
+          "email_message": "user@example.com"
+        },
+        "payment": {
+          "is_outgoing": false,
+          "payment_type": "PURCHASE",
+          "amount": 9,
+          "currency": "USD",
+          "net_amount": 9,
+          "fee_amount": 10.2591,
+          "pending_amount": 0,
+          "pending_unfreeze_on": null,
+          "description": "",
+          "paid_on": 1690295205,
+          "remote_paid_on": 1690295205
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {
+              "bank_account": "",
+              "bank_code": ""
+            }
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {
+            "expiry_month": "10",
+            "amount": 9,
+            "card_issuer": "1-800-432-3117",
+            "masked_pan": "411111XXXXXX1111",
+            "card_brand": "VISA",
+            "card_issuer_country": "US",
+            "cardholder_name": "Test User",
+            "expiry_year": "23"
+          },
+          "country": "",
+          "attempts": [
+            {
+              "client_ip": "203.0.113.10",
+              "type": "execute",
+              "payment_method": "VISA",
+              "flow": "payform",
+              "successful": true,
+              "country": "US",
+              "processing_time": 1690295205,
+              "extra": {
+                "expiry_month": "10",
+                "amount": 9,
+                "card_issuer": "1-800-432-3117",
+                "masked_pan": "411111XXXXXX1111",
+                "card_brand": "VISA",
+                "card_issuer_country": "US",
+                "cardholder_name": "Test User",
+                "expiry_year": "23"
+              }
+            }
+          ]
+        },
+        "status": "PAID",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1690295168
+          }
+        ],
+        "viewedOn": 1690299929,
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "merchantRef": "order-12345",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS192",
+        "issued": "2023-07-25",
+        "due": 1690295168,
+        "refund_upto": 1705843623,
+        "cc_descriptor": "test-cardeye",
+        "refund_availability": "NONE",
+        "refundable_amount": 9,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "http://18.214.100.20/payments/64bfdb7df63e36669499e82f/",
+        "direct_post_url": "http://18.214.100.20/api/v1/p/64bfdb7df63e36669499e82f/"
+      },
+      "errorStatus": "202 Accepted",
+      "errorResponse": {
+        "purchaseId": "64bfd7c9f63e36669499e779",
+        "client": {
+          "bank_account": "",
+          "bank_code": "",
+          "email": "user@example.com",
+          "phone": "+15555550123",
+          "full_name": "Test User",
+          "date_of_birth": "1990-01-01",
+          "personal_code": "",
+          "street_address": "1 Test Street",
+          "country": "IN",
+          "city": "123",
+          "zip_code": "10001",
+          "shipping_street_address": "1 Test Street",
+          "shipping_country": "",
+          "shipping_city": "",
+          "shipping_zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": "",
+          "stateCode": "ca"
+        },
+        "updated_on": 1690294251,
+        "type": "purchase",
+        "force_recurring": false,
+        "created_on": 1690294220,
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 100,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 100,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "request_client_details": [],
+          "timezone": "America/Edmonton",
+          "email_message": "user@example.com"
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {
+              "bank_account": "",
+              "bank_code": ""
+            }
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {
+            "expiry_month": "10",
+            "amount": 100,
+            "card_issuer": "1-800-432-3117",
+            "masked_pan": "411111XXXXXX1111",
+            "card_brand": "VISA",
+            "card_issuer_country": "US",
+            "cardholder_name": "Test User",
+            "expiry_year": "23"
+          },
+          "country": "",
+          "attempts": [
+            {
+              "client_ip": "203.0.113.10",
+              "type": "execute",
+              "payment_method": "VISA",
+              "flow": "payform",
+              "successful": false,
+              "country": "US",
+              "processing_time": 1690294279,
+              "extra": {
+                "expiry_month": "10",
+                "amount": 100,
+                "card_issuer": "1-800-432-3117",
+                "masked_pan": "411111XXXXXX1111",
+                "card_brand": "VISA",
+                "card_issuer_country": "US",
+                "cardholder_name": "Test User",
+                "expiry_year": "23"
+              },
+              "error": {
+                "message": "Transaction Failed",
+                "code": "transaction_error"
+              }
+            }
+          ]
+        },
+        "status": "ERROR",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1690294220
+          }
+        ],
+        "viewedOn": 1690299845,
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS188",
+        "issued": "2023-07-25",
+        "due": 1690294220,
+        "refund_upto": 0,
+        "cc_descriptor": "",
+        "refund_availability": "NONE",
+        "refundable_amount": 0,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "http://18.214.100.20/payments/64bfd7c9f63e36669499e779/",
+        "direct_post_url": "http://18.214.100.20/api/v1/p/64bfd7c9f63e36669499e779/"
+      }
+    }
+  },
+  {
+    "slug": "api-cards",
+    "id": "live-collection-4",
+    "title": "Refund a card purchase",
+    "description": "Initiate a refund for the purchase.",
+    "source": "Payment Methods > 💳 Card Payments > APIs > Refund",
+    "method": "GET",
+    "url": "/purchases/{purchaseId}/refund",
+    "config": {
+      "fields": [],
+      "status": "202 Accepted",
+      "response": {
+        "purchaseId": "64bfdb7df63e36669499e82f",
+        "client": {
+          "customerId": "NA",
+          "email": "user@example.com",
+          "phone": "+15555550123",
+          "full_name": "Test User",
+          "date_of_birth": "1990-01-01",
+          "street_address": "1 Test Street",
+          "country": "IN",
+          "city": "123",
+          "zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "stateCode": "ca"
+        },
+        "updated_on": 1690302819,
+        "type": "purchase",
+        "force_recurring": false,
+        "created_on": 1690295168,
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 9,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 9,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "request_client_details": [],
+          "timezone": "America/Edmonton",
+          "email_message": "user@example.com"
+        },
+        "payment": {
+          "is_outgoing": false,
+          "payment_type": "PURCHASE",
+          "amount": 9,
+          "currency": "USD",
+          "net_amount": 9,
+          "fee_amount": 10.2591,
+          "pending_amount": 0,
+          "pending_unfreeze_on": null,
+          "description": "",
+          "paid_on": 1690295205,
+          "remote_paid_on": 1690295205
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {
+              "bank_account": "",
+              "bank_code": ""
+            }
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {
+            "expiry_month": "10",
+            "amount": 9,
+            "card_issuer": "1-800-432-3117",
+            "masked_pan": "411111XXXXXX1111",
+            "card_brand": "VISA",
+            "card_issuer_country": "US",
+            "cardholder_name": "Test User",
+            "expiry_year": "23"
+          },
+          "country": "",
+          "attempts": [
+            {
+              "client_ip": "203.0.113.10",
+              "type": "execute",
+              "payment_method": "VISA",
+              "flow": "payform",
+              "successful": true,
+              "country": "US",
+              "processing_time": 1690295205,
+              "extra": {
+                "expiry_month": "10",
+                "amount": 9,
+                "card_issuer": "1-800-432-3117",
+                "masked_pan": "411111XXXXXX1111",
+                "card_brand": "VISA",
+                "card_issuer_country": "US",
+                "cardholder_name": "Test User",
+                "expiry_year": "23"
+              }
+            }
+          ]
+        },
+        "status": "REFUNDED",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1765294731
+          }
+        ],
+        "viewedOn": 1690299929,
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS192",
+        "issued": "2023-07-25",
+        "due": 1690295168,
+        "refund_upto": 1705843623,
+        "cc_descriptor": "test-cardeye",
+        "refund_availability": "NONE",
+        "refundable_amount": 0,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "http://18.214.100.20/payments/64bfdb7df63e36669499e82f/",
+        "direct_post_url": "http://18.214.100.20/api/v1/p/64bfdb7df63e36669499e82f/"
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Only Purchases with `status == (paid)` can be refunded.",
+        "code": "transaction_error"
+      }
+    }
+  },
+  {
+    "slug": "api-cards",
+    "id": "live-collection-5",
+    "title": "Cancel a card purchase",
+    "description": "Cancel a purchase that has not reached a terminal state.",
+    "source": "Payment Methods > 💳 Card Payments > APIs > Cancel",
+    "method": "GET",
+    "url": "/purchases/{purchaseId}/cancel",
+    "config": {
+      "fields": [],
+      "status": "202 Accepted",
+      "response": {
+        "purchaseId": "64bff4fff63e36669499e9c8",
+        "client": {
+          "email": "user@example.com",
+          "phone": "+15555550123",
+          "full_name": "Test User",
+          "date_of_birth": "1990-01-01",
+          "personal_code": "",
+          "street_address": "1 Test Street",
+          "country": "IN",
+          "city": "123",
+          "zip_code": "10001",
+          "shipping_street_address": "1 Test Street",
+          "shipping_country": "",
+          "shipping_city": "",
+          "shipping_zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": "",
+          "stateCode": "ca"
+        },
+        "updated_on": 1690301735,
+        "type": "purchase",
+        "force_recurring": false,
+        "created_on": 1690301698,
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 9,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 9,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "request_client_details": [],
+          "timezone": "America/Edmonton",
+          "email_message": "user@example.com"
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {
+              "bank_account": "",
+              "bank_code": ""
+            }
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {},
+          "country": "",
+          "attempts": []
+        },
+        "status": "CANCELLED",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1690301698
+          }
+        ],
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS194",
+        "issued": "2023-07-25",
+        "due": 1690301698,
+        "refund_upto": 0,
+        "cc_descriptor": "",
+        "refund_availability": "NONE",
+        "refundable_amount": 0,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "http://18.214.100.20/payments/64bff4fff63e36669499e9c8/",
+        "direct_post_url": "http://18.214.100.20/api/v1/p/64bff4fff63e36669499e9c8/"
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Only purchases that can be paid for can be canceled.",
+        "code": "transaction_error"
+      }
+    }
+  },
+  {
+    "slug": "api-googlepay",
+    "id": "live-collection-6",
+    "title": "Google Pay seamless — decrypted flow",
+    "description": "Create a purchase using the decrypted Google Pay payload contract.",
+    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Google Pay (Seamless) > APIs > Purchases (Decrypted Flow)",
+    "method": "POST",
+    "url": "/purchases",
+    "config": {
+      "fields": [
+        {
+          "k": "client.customerId",
+          "v": "NA",
+          "req": false
+        },
+        {
+          "k": "client.email",
+          "v": "user@example.com",
+          "req": false
+        },
+        {
+          "k": "client.full_name",
+          "v": "Test User",
+          "req": false
+        },
+        {
+          "k": "client.date_of_birth",
+          "v": "1990-01-01",
+          "req": false
+        },
+        {
+          "k": "client.street_address",
+          "v": "1 Test Street",
+          "req": false
+        },
+        {
+          "k": "client.country",
+          "v": "BR",
+          "req": false
+        },
+        {
+          "k": "client.city",
+          "v": "DLJPR",
+          "req": false
+        },
+        {
+          "k": "client.zip_code",
+          "v": "10001",
+          "req": false
+        },
+        {
+          "k": "client.cc",
+          "v": "[]",
+          "req": false
+        },
+        {
+          "k": "client.bcc",
+          "v": "[]",
+          "req": false
+        },
+        {
+          "k": "client.stateCode",
+          "v": "DL",
+          "req": false
+        },
+        {
+          "k": "purchase.currency",
+          "v": "EUR",
+          "req": false
+        },
+        {
+          "k": "purchase.products[0].name",
+          "v": "Test User",
+          "req": false
+        },
+        {
+          "k": "purchase.products[0].price",
+          "v": "10",
+          "req": false
+        },
+        {
+          "k": "paymentMethod",
+          "v": "GOOGLEPAY",
+          "req": false
+        },
+        {
+          "k": "brand_id",
+          "v": "{{BrandId}}",
+          "req": false
+        },
+        {
+          "k": "success_redirect",
+          "v": "https://merchant.example/success-redirect",
+          "req": false
+        },
+        {
+          "k": "pending_redirect",
+          "v": "https://merchant.example/pending-redirect",
+          "req": false
+        },
+        {
+          "k": "failure_redirect",
+          "v": "https://merchant.example/failure-redirect",
+          "req": false
+        },
+        {
+          "k": "success_callback",
+          "v": "https://merchant.example/success-callback",
+          "req": false
+        },
+        {
+          "k": "failure_callback",
+          "v": "https://merchant.example/failure-callback",
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.google_merchant_id",
+          "v": "merchant:1234567890",
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.messageExpiration",
+          "v": "1735689600000",
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.messageId",
+          "v": "AH2EjtfkYz...",
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.paymentMethod",
+          "v": "CARD",
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.paymentMethodDetails.pan",
+          "v": "4111111111111111",
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.paymentMethodDetails.expirationMonth",
+          "v": 12,
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.paymentMethodDetails.expirationYear",
+          "v": 2027,
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.paymentMethodDetails.authMethod",
+          "v": "CRYPTOGRAM_3DS",
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.paymentMethodDetails.cryptogram",
+          "v": "AgAAAAAABk4D...",
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.paymentMethodDetails.eciIndicator",
+          "v": "05",
+          "req": false
+        },
+        {
+          "k": "extraParam.googlepay_param.googlepay_decrypted_payload.gatewayMerchantId",
+          "v": "your_gateway_merchant_id",
+          "req": false
+        }
+      ],
+      "status": "200 OK",
+      "response": {
+        "purchaseId": "69cce01f5bae56fd5547a993",
+        "client": {
+          "customerId": "NA",
+          "email": "user@example.com",
+          "full_name": "Test User",
+          "date_of_birth": "1990-01-01",
+          "street_address": "1 Test Street",
+          "country": "BR",
+          "city": "DLJPR",
+          "zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "stateCode": "DL"
+        },
+        "updated_on": 1775034399,
+        "type": "purchase",
+        "paymentMethod": "GOOGLEPAY",
+        "amountUnit": "MAJOR",
+        "errorMsg": "",
+        "errorCode": "NA",
+        "force_recurring": false,
+        "created_on": 1775034399,
+        "merchantRef": "order-12345",
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 10,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 10,
+          "requestAmount": 10,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "taxAmount": 0,
+          "taxPercent": 0,
+          "request_client_details": [],
+          "email_message": "user@example.com"
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {}
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {},
+          "country": "",
+          "attempts": []
+        },
+        "status": "CREATED",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1775034399
+          }
+        ],
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS1032",
+        "issued": "2026-04-01",
+        "due": 1775034399,
+        "refund_upto": 0,
+        "cc_descriptor": "",
+        "fraudScore": "NA",
+        "trustScore": "NA",
+        "extraFee": "0",
+        "paidOn": 0,
+        "receivedAmt": 0,
+        "taxAmount": 0,
+        "surcharge": 0,
+        "surchargeType": "",
+        "sessionId": "",
+        "refund_availability": "NONE",
+        "refundable_amount": 0,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "pending_redirect": "https://merchant.example/pending-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "failure_callback": "https://merchant.example/failure-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "https://api.choicepay.ca/payments/6b5a5977ac8e022facb31f3346f61ed0/",
+        "direct_post_url": "https://api.choicepay.ca/api/v1/p/69cce01f5bae56fd5547a993/",
+        "payoutProcess": false
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Error Message",
+        "code": "error_code"
+      }
+    }
+  },
+  {
+    "slug": "api-googlepay",
+    "id": "live-collection-7",
+    "title": "Google Pay redirect — create session",
+    "description": "Create a hosted Google Pay session for an existing customer.",
+    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Google Pay Redirect > APIs > Session",
+    "method": "POST",
+    "url": "/createSession",
+    "config": {
+      "fields": [],
+      "status": "200 OK",
+      "response": {
+        "sessionUrl": "https://api.choicepay.ca/payment-session/6963533a0a18ea65153a81e7/",
+        "brandId": "brand_id_value",
+        "customerId": "69034a5a61b460084d20c23b",
+        "sessionId": "6963533a0a18ea65153a81e7",
+        "expiryOn": 1768117950,
+        "createdOn": 1768117050
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Customer does not exist with this Customer Id",
+        "code": "Customer Id is invalid"
+      }
+    }
+  },
+  {
+    "slug": "api-googlepay",
+    "id": "live-collection-8",
+    "title": "Google Pay seamless — get status",
+    "description": "Retrieve the latest seamless Google Pay purchase state.",
+    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Google Pay (Seamless) > APIs > Get Status",
+    "method": "GET",
+    "url": "/purchases/{purchaseId}",
+    "config": {
+      "fields": [],
+      "status": "200 OK",
+      "response": {
+        "purchaseId": "69cce01f5bae56fd5547a993",
+        "client": {
+          "customerId": "NA",
+          "email": "user@example.com",
+          "full_name": "Test User",
+          "date_of_birth": "1990-01-01",
+          "street_address": "1 Test Street",
+          "country": "BR",
+          "city": "DLJPR",
+          "zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "stateCode": "DL"
+        },
+        "updated_on": 1775034399,
+        "type": "purchase",
+        "paymentMethod": "GOOGLEPAY",
+        "amountUnit": "MAJOR",
+        "errorMsg": "",
+        "errorCode": "NA",
+        "force_recurring": false,
+        "created_on": 1775034399,
+        "merchantRef": "order-12345",
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 10,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 10,
+          "requestAmount": 10,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "taxAmount": 0,
+          "taxPercent": 0,
+          "request_client_details": [],
+          "email_message": "user@example.com"
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {}
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {},
+          "country": "",
+          "attempts": []
+        },
+        "status": "CREATED",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1775034399
+          }
+        ],
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS1032",
+        "issued": "2026-04-01",
+        "due": 1775034399,
+        "refund_upto": 0,
+        "cc_descriptor": "",
+        "fraudScore": "NA",
+        "trustScore": "NA",
+        "extraFee": "0",
+        "paidOn": 0,
+        "receivedAmt": 0,
+        "taxAmount": 0,
+        "surcharge": 0,
+        "surchargeType": "",
+        "sessionId": "",
+        "refund_availability": "NONE",
+        "refundable_amount": 0,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "pending_redirect": "https://merchant.example/pending-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "failure_callback": "https://merchant.example/failure-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "https://api.choicepay.ca/payments/6b5a5977ac8e022facb31f3346f61ed0/",
+        "direct_post_url": "https://api.choicepay.ca/api/v1/p/69cce01f5bae56fd5547a993/",
+        "payoutProcess": false
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Error Message",
+        "code": "error_code"
+      }
+    }
+  },
+  {
+    "slug": "api-applepay",
+    "id": "live-collection-9",
+    "title": "Apple Pay seamless — decrypted flow",
+    "description": "Create a purchase using the decrypted Apple Pay payload contract.",
+    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay (Seamless) > APIs > Purchases (Decrypted Flow)",
+    "method": "POST",
+    "url": "/purchases",
+    "config": {
+      "fields": [
+        {
+          "k": "client.email",
+          "v": "user@example.com",
+          "req": false
+        },
+        {
+          "k": "purchase.currency",
+          "v": "USD",
+          "req": false
+        },
+        {
+          "k": "purchase.products[0].name",
+          "v": "Test User",
+          "req": false
+        },
+        {
+          "k": "purchase.products[0].price",
+          "v": "10.00",
+          "req": false
+        },
+        {
+          "k": "paymentMethod",
+          "v": "APPLEPAY",
+          "req": false
+        },
+        {
+          "k": "brand_id",
+          "v": "{{BrandId}}",
+          "req": false
+        },
+        {
+          "k": "success_redirect",
+          "v": "https://merchant.example/success-redirect",
+          "req": false
+        },
+        {
+          "k": "pending_redirect",
+          "v": "https://merchant.example/pending-redirect",
+          "req": false
+        },
+        {
+          "k": "failure_redirect",
+          "v": "https://merchant.example/failure-redirect",
+          "req": false
+        },
+        {
+          "k": "extraParam.applepay_param.applepay_decrypted_payload.applicationPrimaryAccountNumber",
+          "v": "4111111111111111",
+          "req": false
+        },
+        {
+          "k": "extraParam.applepay_param.applepay_decrypted_payload.applicationExpirationDate",
+          "v": "2712",
+          "req": false
+        },
+        {
+          "k": "extraParam.applepay_param.applepay_decrypted_payload.currencyCode",
+          "v": "840",
+          "req": false
+        },
+        {
+          "k": "extraParam.applepay_param.applepay_decrypted_payload.transactionAmount",
+          "v": 1000,
+          "req": false
+        },
+        {
+          "k": "extraParam.applepay_param.applepay_decrypted_payload.deviceManufacturerIdentifier",
+          "v": "040010030273",
+          "req": false
+        },
+        {
+          "k": "extraParam.applepay_param.applepay_decrypted_payload.paymentDataType",
+          "v": "3DSecure",
+          "req": false
+        },
+        {
+          "k": "extraParam.applepay_param.applepay_decrypted_payload.paymentData.onlinePaymentCryptogram",
+          "v": "AgAAAAAABk4D...",
+          "req": false
+        },
+        {
+          "k": "extraParam.applepay_param.applepay_decrypted_payload.paymentData.eciIndicator",
+          "v": "05",
+          "req": false
+        }
+      ],
+      "status": "200 OK",
+      "response": {
+        "purchaseId": "69cce01f5bae56fd5547a993",
+        "client": {
+          "customerId": "NA",
+          "email": "user@example.com",
+          "full_name": "Test User",
+          "date_of_birth": "1990-01-01",
+          "street_address": "1 Test Street",
+          "country": "BR",
+          "city": "DLJPR",
+          "zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "stateCode": "DL"
+        },
+        "updated_on": 1775034399,
+        "type": "purchase",
+        "paymentMethod": "APPLEPAY",
+        "amountUnit": "MAJOR",
+        "errorMsg": "",
+        "errorCode": "NA",
+        "force_recurring": false,
+        "created_on": 1775034399,
+        "merchantRef": "order-12345",
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 10,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 10,
+          "requestAmount": 10,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "taxAmount": 0,
+          "taxPercent": 0,
+          "request_client_details": [],
+          "email_message": "user@example.com"
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {}
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {},
+          "country": "",
+          "attempts": []
+        },
+        "status": "CREATED",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1775034399
+          }
+        ],
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS1032",
+        "issued": "2026-04-01",
+        "due": 1775034399,
+        "refund_upto": 0,
+        "cc_descriptor": "",
+        "fraudScore": "NA",
+        "trustScore": "NA",
+        "extraFee": "0",
+        "paidOn": 0,
+        "receivedAmt": 0,
+        "taxAmount": 0,
+        "surcharge": 0,
+        "surchargeType": "",
+        "sessionId": "",
+        "refund_availability": "NONE",
+        "refundable_amount": 0,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "pending_redirect": "https://merchant.example/pending-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "failure_callback": "https://merchant.example/failure-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "https://api.choicepay.ca/payments/6b5a5977ac8e022facb31f3346f61ed0/",
+        "direct_post_url": "https://api.choicepay.ca/api/v1/p/69cce01f5bae56fd5547a993/",
+        "payoutProcess": false
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Error Message",
+        "code": "error_code"
+      }
+    }
+  },
+  {
+    "slug": "api-applepay",
+    "id": "live-collection-10",
+    "title": "Apple Pay redirect — create session",
+    "description": "Create a hosted Apple Pay session for an existing customer.",
+    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay Redirect > APIs > Session",
+    "method": "POST",
+    "url": "/createSession",
+    "config": {
+      "fields": [],
+      "status": "200 OK",
+      "response": {
+        "sessionUrl": "https://api.choicepay.ca/payment-session/6963533a0a18ea65153a81e7/",
+        "brandId": "brand_id_value",
+        "customerId": "69034a5a61b460084d20c23b",
+        "sessionId": "6963533a0a18ea65153a81e7",
+        "expiryOn": 1768117950,
+        "createdOn": 1768117050
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Customer does not exist with this Customer Id",
+        "code": "Customer Id is invalid"
+      }
+    }
+  },
+  {
+    "slug": "api-applepay",
+    "id": "live-collection-11",
+    "title": "Apple Pay redirect — get status",
+    "description": "Retrieve the latest redirect Apple Pay purchase state.",
+    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay Redirect > APIs > Get Status",
+    "method": "GET",
+    "url": "/purchases/{purchaseId}",
+    "config": {
+      "fields": [],
+      "sourceExampleGap": {
+        "missing": ["success"],
+        "reason": "The merchant-facing Postman request has no saved success response; no response was inferred during migration."
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Error Message",
+        "code": "error_code"
+      }
+    }
+  },
+  {
+    "slug": "api-applepay",
+    "id": "live-collection-12",
+    "title": "Get Apple Pay purchase status",
+    "description": "Retrieve the latest Apple Pay purchase state.",
+    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay (Seamless) > APIs > Get Status",
+    "method": "GET",
+    "url": "/purchases/{purchaseId}",
+    "config": {
+      "fields": [],
+      "status": "200 OK",
+      "response": {
+        "purchaseId": "69cce01f5bae56fd5547a993",
+        "client": {
+          "customerId": "NA",
+          "email": "user@example.com",
+          "full_name": "Test User",
+          "date_of_birth": "1990-01-01",
+          "street_address": "1 Test Street",
+          "country": "BR",
+          "city": "DLJPR",
+          "zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "stateCode": "DL"
+        },
+        "updated_on": 1775034399,
+        "type": "purchase",
+        "paymentMethod": "GOOGLEPAY",
+        "amountUnit": "MAJOR",
+        "errorMsg": "",
+        "errorCode": "NA",
+        "force_recurring": false,
+        "created_on": 1775034399,
+        "merchantRef": "order-12345",
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 10,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 10,
+          "requestAmount": 10,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "taxAmount": 0,
+          "taxPercent": 0,
+          "request_client_details": [],
+          "email_message": "user@example.com"
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {}
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {},
+          "country": "",
+          "attempts": []
+        },
+        "status": "CREATED",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1775034399
+          }
+        ],
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS1032",
+        "issued": "2026-04-01",
+        "due": 1775034399,
+        "refund_upto": 0,
+        "cc_descriptor": "",
+        "fraudScore": "NA",
+        "trustScore": "NA",
+        "extraFee": "0",
+        "paidOn": 0,
+        "receivedAmt": 0,
+        "taxAmount": 0,
+        "surcharge": 0,
+        "surchargeType": "",
+        "sessionId": "",
+        "refund_availability": "NONE",
+        "refundable_amount": 0,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "pending_redirect": "https://merchant.example/pending-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "failure_callback": "https://merchant.example/failure-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "https://api.choicepay.ca/payments/6b5a5977ac8e022facb31f3346f61ed0/",
+        "direct_post_url": "https://api.choicepay.ca/api/v1/p/69cce01f5bae56fd5547a993/",
+        "payoutProcess": false
+      },
+      "errorStatus": "400 Bad Request",
+      "errorResponse": {
+        "message": "Error Message",
+        "code": "error_code"
+      }
+    }
+  },
+  {
+    "slug": "api-payout-review",
+    "id": "live-collection-13",
+    "title": "List payouts pending manual review",
+    "description": "Retrieve payouts using the filters in the live collection.",
+    "source": "Payout Manual Review > List Payouts",
+    "method": "GET",
+    "url": "/external/transactions/payout/list?page_no=1&page_size=10&status=error&timezone=Asia%2FKolkata&start_date=2026-01-01+00%3A00%3A00&end_date=2026-01-01+00%3A00%3A00&payment_method=PAYOUT-SPEI%2C+PAYOUT-INTERAC-ETRANSFER&email=user%40example.com&customer_segment=NA",
+    "config": {
+      "fields": [],
+      "sourceExampleGap": {
+        "missing": ["success", "error"],
+        "reason": "The Payout Manual Review Postman folder has no saved responses; no response was inferred during migration."
+      }
+    }
+  },
+  {
+    "slug": "api-payout-review",
+    "id": "live-collection-14",
+    "title": "Approve payout without remarks",
+    "description": "Approve a payout without submitting a remarks body.",
+    "source": "Payout Manual Review > Approve Payout",
+    "method": "POST",
+    "url": "/payouts/{payout_id}/action?action=approve",
+    "config": {
+      "fields": [],
+      "sourceExampleGap": {
+        "missing": ["success", "error"],
+        "reason": "The Payout Manual Review Postman folder has no saved responses; no response was inferred during migration."
+      }
+    }
+  },
+  {
+    "slug": "api-payout-review",
+    "id": "live-collection-15",
+    "title": "Reject payout without remarks",
+    "description": "Reject a payout without submitting a remarks body.",
+    "source": "Payout Manual Review > Reject Payout",
+    "method": "POST",
+    "url": "/payouts/{payout_id}/action?action=reject",
+    "config": {
+      "fields": [],
+      "sourceExampleGap": {
+        "missing": ["success", "error"],
+        "reason": "The Payout Manual Review Postman folder has no saved responses; no response was inferred during migration."
+      }
+    }
+  }
+]

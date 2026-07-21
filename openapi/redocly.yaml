@@ -1,0 +1,12 @@
+# Lint config for the Paysecure OpenAPI spec.
+extends:
+  - recommended
+rules:
+  # Paysecure API paths genuinely end in a trailing slash (e.g. POST /purchases/).
+  no-path-trailing-slash: off
+  # First-cut: not every GET has a documented error example yet (Phase 4).
+  operation-4xx-response: off
+  # One documented path uses a leading path variable (/{paysecureCustomerId}/patchCustomer)
+  # which is ambiguous with /mandate/{id}. Tracked as a BE open item in SPEC_NOTES.md
+  # rather than silently rewritten.
+  no-ambiguous-paths: off

@@ -1,0 +1,27 @@
+{
+  "id": "paysecure",
+  "brand": {
+    "name": "Pay",
+    "nameAccent": "secure",
+    "mark": "P",
+    "docsLabel": "Docs"
+  },
+  "logo": {
+    "color": "https://content.pstmn.io/e78622ee-0bde-4eb7-a86c-39773aef731c/UGF5c2VjdXJlIGxvZ28gY29sb3IgaG9yaXpvbnRhbCAyLnBuZw==",
+    "white": "https://content.pstmn.io/2b04ee0f-2006-4464-a8ab-d91bfdca84ed/UGF5c2VjdXJlIGxvZ28gd2hpdGUgaG9yaXpvbnRhbCAoNikucG5n"
+  },
+  "palette": {
+    "purple": "#5D26C9",
+    "purple-dark": "#4A1DA8",
+    "purple-mid": "#7B3FE4",
+    "purple-100": "#EDE9FE",
+    "purple-50": "#F7F5FF"
+  },
+  "domains": {
+    "site": "https://paysecure.com",
+    "status": "https://status.paysecure.co/",
+    "apiBase": "https://api.paysecure.net/api/v1",
+    "contactEmail": "info@paysecure.net"
+  },
+  "methods": "all"
+}

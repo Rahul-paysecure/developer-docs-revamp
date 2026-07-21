@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Generated builds and deployment artifacts
+dist/
+builds/
+*.zip
+.netlify/
+
+# Generated reports and temporary working files
+output/
+tmp/
+postman-parity-report.json
+
+# Local environment and editor files
+.env
+.env.*
+!.env.example
+*.local
+*.log
+.DS_Store
+
+# Internal programme artifacts kept outside the deployable source repository
+/Document Content Auditing/
+/Paysecure_API_Docs_Programme_Roadmap_v1.1.docx
+/Paysecure_API_Docs_Programme_Roadmap_v1.1.pdf
