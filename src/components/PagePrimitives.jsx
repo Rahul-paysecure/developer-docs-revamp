@@ -96,15 +96,6 @@ function parseBody(text) {
   }
 }
 
-function endpointLabel(value) {
-  try {
-    const target = new URL(value);
-    return `${target.pathname}${target.search}`;
-  } catch {
-    return value;
-  }
-}
-
 export function TryIt({ method = 'POST', url = '/', config = {} }) {
   const cleanUrl = url.split('·')[0].trim();
   const fullUrl = `${TENANT.domains.apiBase.replace(/\/$/, '')}/${cleanUrl.replace(/^\//, '')}`;
@@ -256,9 +247,6 @@ export function TryIt({ method = 'POST', url = '/', config = {} }) {
     setLiveResponse(null);
   };
 
-  const shownMethod = parsedDraft.request?.method || method.toUpperCase();
-  const shownUrl = parsedDraft.request?.url || fullUrl;
-  const shownEndpoint = endpointLabel(shownUrl);
   const selectedStatus = selected ? splitStatus(selected.status) : null;
   const responseHeaders = liveResponse ? Object.entries(liveResponse.headers || {}) : [];
 
@@ -274,10 +262,6 @@ export function TryIt({ method = 'POST', url = '/', config = {} }) {
           data-request-curl={defaultCurl}
         >
           <header className="api-template-toolbar">
-            <div className="api-template-endpoint">
-              <span className="api-template-method">{shownMethod}</span>
-              <span title={shownUrl}>{shownEndpoint}</span>
-            </div>
             <div className="api-template-actions">
               <button type="button" className="api-template-run" onClick={send} disabled={sending}>
                 {sending ? 'Running…' : liveResponse ? 'Run again' : 'Try it now'}

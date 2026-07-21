@@ -167,10 +167,6 @@ export default function ApiConsoleTemplate() {
 
       <section className={`api-template-card request${expanded === 'request' ? ' expanded' : ''}`} aria-label="API request template">
         <header className="api-template-toolbar">
-          <div className="api-template-endpoint">
-            <span className="api-template-method">POST</span>
-            <span>/purchases</span>
-          </div>
           <div className="api-template-actions">
             <button type="button" className="api-template-run" onClick={run} disabled={running}>
               {running ? 'Running…' : 'Try it now'}

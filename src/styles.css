@@ -625,7 +625,7 @@ body.dark .doc-editor-actions button, body.dark .doc-editor-message input { back
 .api-template-shell { position: relative; display: grid; gap: 24px; margin-top: 8px; }
 .api-template-backdrop { position: fixed; inset: 0; z-index: 190; border: 0; background: rgba(7, 13, 28, .72); backdrop-filter: blur(4px); }
 .api-template-card {
-  min-width: 0; overflow: visible; border: 1px solid #CFD5DF; border-radius: 14px;
+  min-width: 0; overflow: hidden; border: 1px solid #CFD5DF; border-radius: 14px;
   box-shadow: 0 12px 34px rgba(15, 23, 42, .08); transition: box-shadow .2s, transform .2s;
 }
 .api-template-card.expanded {
@@ -653,11 +653,10 @@ body.dark .doc-editor-actions button, body.dark .doc-editor-message input { back
   position: relative; z-index: 5; min-height: 70px; display: flex; align-items: center;
   justify-content: space-between; gap: 18px; padding: 14px 20px; border-bottom: 1px solid;
 }
-.api-template-card.request .api-template-toolbar { border-color: #2A3354; background: var(--code-head); }
+.api-template-card.request .api-template-toolbar {
+  justify-content: flex-end; border-color: #2A3354; background: var(--code-head);
+}
 .api-template-card.response .api-template-toolbar { border-color: #D7DCE4; }
-.api-template-endpoint { display: flex; align-items: center; gap: 8px; min-width: 0; font: 700 20px/1.2 'JetBrains Mono', ui-monospace, monospace; }
-.api-template-endpoint > span:last-child { overflow: hidden; text-overflow: ellipsis; }
-.api-template-method { color: #32E2DF; }
 .api-template-actions { display: flex; align-items: center; gap: 7px; }
 .api-template-run {
   border: 0; border-radius: 8px; padding: 8px 13px; cursor: pointer; color: #fff;
@@ -971,7 +970,6 @@ body.dark .mchip:hover { color: var(--lime); border-color: var(--lime); }
 .api-live-console { margin: 0; }
 .api-live-console .api-template-card { box-shadow: 0 8px 24px rgba(15, 23, 42, .07); }
 .api-live-console .api-template-toolbar { min-height: 62px; padding: 11px 15px; }
-.api-live-console .api-template-endpoint { font-size: 15px; }
 .api-live-console .api-template-run { padding: 8px 11px; }
 .api-live-console .api-template-request-body,
 .api-live-console .api-template-response-body { height: 320px; }
