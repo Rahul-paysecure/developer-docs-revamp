@@ -1,11 +1,5 @@
-# CODEOWNERS is intentionally inactive until the Paysecure GitHub organisation
-# and team handles are confirmed. Replace the examples below, remove the leading
-# # characters, and protect this file before requiring code-owner reviews.
+# Temporary single-owner configuration.
+# Add individual GitHub usernames here when collaborators join, then enable
+# required code-owner reviews in the main branch protection settings.
 
-# *                                      @paysecure/docs
-# /src/content/trees/api-*.js            @paysecure/api-engineering @paysecure/docs
-# /src/content/trees/product-*.js        @paysecure/product @paysecure/docs
-# /src/content/trees/dash-*.js           @paysecure/dashboard @paysecure/docs
-# /src/components/                       @paysecure/frontend @paysecure/docs
-# /openapi/                               @paysecure/api-engineering
-# /.github/                               @paysecure/docs-platform
+* @Rahul-paysecure
