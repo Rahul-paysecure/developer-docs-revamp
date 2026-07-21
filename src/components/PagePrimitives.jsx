@@ -9,6 +9,8 @@ import {
   requestPlaceholders,
 } from '../utils/curl.js';
 import { brandIdPlacement, fieldsForBrandIdPlacement } from '../utils/brandId.js';
+import { Icon } from '../data/icons.jsx';
+import { CodeLines, ConsoleIconButton } from './ApiConsoleTemplate.jsx';
 import { usePageAddenda } from './PageAddendaContext.jsx';
 
 export function DocLink({ href = '', children, ...props }) {
@@ -94,6 +96,15 @@ function parseBody(text) {
   }
 }
 
+function endpointLabel(value) {
+  try {
+    const target = new URL(value);
+    return `${target.pathname}${target.search}`;
+  } catch {
+    return value;
+  }
+}
+
 export function TryIt({ method = 'POST', url = '/', config = {} }) {
   const cleanUrl = url.split('·')[0].trim();
   const fullUrl = `${TENANT.domains.apiBase.replace(/\/$/, '')}/${cleanUrl.replace(/^\//, '')}`;
@@ -118,10 +129,13 @@ export function TryIt({ method = 'POST', url = '/', config = {} }) {
   const [language, setLanguage] = useState('curl');
   const [curlDraft, setCurlDraft] = useState(defaultCurl);
   const [responseIndex, setResponseIndex] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
+  const [responseMenuOpen, setResponseMenuOpen] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [expanded, setExpanded] = useState('');
   const [sending, setSending] = useState(false);
   const [liveResponse, setLiveResponse] = useState(null);
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState('');
 
   const parsedDraft = useMemo(() => {
     try {
@@ -167,7 +181,8 @@ export function TryIt({ method = 'POST', url = '/', config = {} }) {
 
   const send = async () => {
     setSending(true);
-    setMenuOpen(false);
+    setLanguageMenuOpen(false);
+    setResponseMenuOpen(false);
     let timeoutId;
     try {
       const request = parseCurl(curlDraft);
@@ -228,147 +243,196 @@ export function TryIt({ method = 'POST', url = '/', config = {} }) {
     }
   };
 
-  const copy = async () => {
-    if (navigator.clipboard) await navigator.clipboard.writeText(visibleCode);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1500);
+  const copy = async (value, target) => {
+    if (navigator.clipboard) await navigator.clipboard.writeText(value);
+    setCopied(target);
+    window.setTimeout(() => setCopied(''), 1500);
   };
 
   const reset = () => {
     setCurlDraft(defaultCurl);
     setLanguage('curl');
+    setEditing(false);
     setLiveResponse(null);
   };
 
   const shownMethod = parsedDraft.request?.method || method.toUpperCase();
   const shownUrl = parsedDraft.request?.url || fullUrl;
+  const shownEndpoint = endpointLabel(shownUrl);
   const selectedStatus = selected ? splitStatus(selected.status) : null;
   const responseHeaders = liveResponse ? Object.entries(liveResponse.headers || {}) : [];
 
   return (
     <div className="explorer try-it">
-      <div className="explorer-head">
-        <div className="code-tabs xtabs">
-          {[
-            ['curl', 'cURL'],
-            ['js', 'JavaScript'],
-            ['py', 'Python'],
-          ].map(([value, label]) => (
-            <button
-              key={value}
-              className={language === value ? 'on' : undefined}
-              onClick={() => setLanguage(value)}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-        <button className="x-copy" title="Copy request" onClick={copy}>
-          {copied ? '✓ Copied' : '⧉ Copy'}
-        </button>
-        <button className="x-copy" title="Reset request" onClick={reset}>
-          ↺ Reset
-        </button>
-        <button className="btn-send" onClick={send} disabled={sending}>
-          {sending ? 'Running…' : liveResponse ? '▶ Run again' : '▶ Try It Now'}
-        </button>
-      </div>
-      <div className="explorer-body">
-        <div className="explorer-req">
-          <div className="fl">
-            <span className={`method ${shownMethod.toLowerCase() === 'get' ? 'get' : 'post'}`}>
-              {shownMethod}
-            </span>
-            <span className="xurl">{shownUrl}</span>
-          </div>
-          {language === 'curl' ? (
-            <textarea
-              className="req-editor"
-              aria-label="Editable cURL request"
-              value={curlDraft}
-              onChange={(event) => {
-                setCurlDraft(event.target.value);
-                setLiveResponse(null);
-              }}
-              rows={14}
-              spellCheck={false}
-            />
-          ) : (
-            <pre className="req-preview">{visibleCode}</pre>
-          )}
-          <div className="req-note">
-            Edit the complete cURL command—method, URL, headers and body. It runs directly from
-            this browser; credentials are kept only in this tab and are not stored.
-          </div>
-          {parsedDraft.error && <div className="req-error">{parsedDraft.error}</div>}
-        </div>
-        <div className="explorer-res">
-          <div className="fl res-status">
-            {selected ? (
-              <div
-                className={`res-select${!liveResponse && responses.length > 1 ? '' : ' one'}`}
-                tabIndex={0}
-                onClick={() =>
-                  !liveResponse && responses.length > 1 && setMenuOpen((open) => !open)
-                }
-              >
-                <span className="res-cur">
-                  <span className={`res-code ${selected.error ? 'err' : 'ok'}`}>
-                    {selectedStatus.code}
-                  </span>
-                  {selectedStatus.label}
-                  <span className="res-meta">
-                    {liveResponse
-                      ? `Live${liveResponse.duration === null ? '' : ` · ${liveResponse.duration} ms`}`
-                      : 'Documented example'}
-                  </span>
-                </span>
-                {!liveResponse && responses.length > 1 && <span className="res-caret">▾</span>}
-                {!liveResponse && responses.length > 1 && (
-                  <div className="res-menu" hidden={!menuOpen}>
-                    {responses.map((response, index) => {
-                      const status = splitStatus(response.status);
-                      return (
-                        <button
-                          type="button"
-                          className={index === responseIndex ? 'on' : undefined}
-                          key={response.status}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            setResponseIndex(index);
-                            setMenuOpen(false);
-                          }}
-                        >
-                          <span className={`res-code ${response.error ? 'err' : 'ok'}`}>
-                            {status.code}
-                          </span>
-                          {status.label}
-                        </button>
-                      );
-                    })}
+      <div className={`api-template-shell api-live-console${expanded ? ` is-expanded expanded-${expanded}` : ''}`}>
+        {expanded && (
+          <button type="button" className="api-template-backdrop" aria-label="Close expanded API panel" onClick={() => setExpanded('')} />
+        )}
+
+        <section
+          className={`api-template-card request${expanded === 'request' ? ' expanded' : ''}`}
+          data-request-curl={defaultCurl}
+        >
+          <header className="api-template-toolbar">
+            <div className="api-template-endpoint">
+              <span className="api-template-method">{shownMethod}</span>
+              <span title={shownUrl}>{shownEndpoint}</span>
+            </div>
+            <div className="api-template-actions">
+              <button type="button" className="api-template-run" onClick={send} disabled={sending}>
+                {sending ? 'Running…' : liveResponse ? 'Run again' : 'Try it now'}
+              </button>
+              <div className="api-template-language">
+                <button
+                  type="button"
+                  className="api-template-language-trigger"
+                  aria-haspopup="listbox"
+                  aria-expanded={languageMenuOpen}
+                  onClick={() => setLanguageMenuOpen((open) => !open)}
+                >
+                  {language === 'curl' ? 'cURL' : language === 'js' ? 'JavaScript' : 'Python'}
+                  <Icon name="chevron-down" />
+                </button>
+                {languageMenuOpen && (
+                  <div className="api-template-language-menu" role="listbox" aria-label="Request language">
+                    {[
+                      ['curl', 'cURL', '>_'],
+                      ['js', 'JavaScript', 'JS'],
+                      ['py', 'Python', 'Py'],
+                    ].map(([value, label, mark]) => (
+                      <button
+                        type="button"
+                        role="option"
+                        aria-selected={language === value}
+                        className={language === value ? 'selected' : undefined}
+                        key={value}
+                        onClick={() => {
+                          setLanguage(value);
+                          setEditing(false);
+                          setLanguageMenuOpen(false);
+                        }}
+                      >
+                        <span className="api-template-language-mark" aria-hidden="true">{mark}</span>
+                        <span>{label}</span>
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
+              <ConsoleIconButton
+                label={editing ? 'Preview request' : 'Edit complete cURL request'}
+                onClick={() => {
+                  if (!editing) setLanguage('curl');
+                  setEditing((value) => !value);
+                }}
+              >
+                <Icon name={editing ? 'eye' : 'edit'} />
+              </ConsoleIconButton>
+              <ConsoleIconButton label="Copy request" onClick={() => copy(visibleCode, 'request')}>
+                {copied === 'request' ? '✓' : <Icon name="copy" />}
+              </ConsoleIconButton>
+              <ConsoleIconButton label="Reset request" onClick={reset}>
+                <Icon name="rotate" />
+              </ConsoleIconButton>
+              <ConsoleIconButton
+                label={expanded === 'request' ? 'Close expanded request' : 'Expand request'}
+                onClick={() => setExpanded(expanded === 'request' ? '' : 'request')}
+              >
+                <Icon name={expanded === 'request' ? 'close' : 'expand'} />
+              </ConsoleIconButton>
+            </div>
+          </header>
+          <div className="api-template-request-body">
+            {editing ? (
+              <textarea
+                aria-label="Editable cURL request"
+                value={curlDraft}
+                onChange={(event) => {
+                  setCurlDraft(event.target.value);
+                  setLiveResponse(null);
+                }}
+                spellCheck={false}
+              />
             ) : (
-              <span>{sending ? 'Waiting for response…' : 'Run the request to see its response'}</span>
+              <CodeLines code={visibleCode} tone="dark" />
             )}
           </div>
+          {parsedDraft.error && <div className="api-live-request-error">{parsedDraft.error}</div>}
+        </section>
+
+        <section className={`api-template-card response${expanded === 'response' ? ' expanded' : ''}`}>
+          <header className="api-template-toolbar">
+            <div className="api-template-response-title">
+              <strong>Response JSON</strong>
+              {selected && (
+                <div className="api-live-status-selector">
+                  <button
+                    type="button"
+                    className={`api-template-status${selected.error ? ' error' : ''}`}
+                    aria-haspopup={!liveResponse && responses.length > 1 ? 'listbox' : undefined}
+                    aria-expanded={!liveResponse && responses.length > 1 ? responseMenuOpen : undefined}
+                    onClick={() => !liveResponse && responses.length > 1 && setResponseMenuOpen((open) => !open)}
+                  >
+                    {selectedStatus.code} {selectedStatus.label}
+                    {!liveResponse && responses.length > 1 && <Icon name="chevron-down" />}
+                  </button>
+                  {!liveResponse && responses.length > 1 && responseMenuOpen && (
+                    <div className="api-live-status-menu" role="listbox" aria-label="Documented response example">
+                      {responses.map((response, index) => {
+                        const status = splitStatus(response.status);
+                        return (
+                          <button
+                            type="button"
+                            role="option"
+                            aria-selected={index === responseIndex}
+                            className={index === responseIndex ? 'selected' : undefined}
+                            key={`${response.status}-${index}`}
+                            onClick={() => {
+                              setResponseIndex(index);
+                              setResponseMenuOpen(false);
+                            }}
+                          >
+                            <span className={`api-template-status${response.error ? ' error' : ''}`}>{status.code}</span>
+                            {status.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
+              <span className="api-template-response-meta">
+                {liveResponse
+                  ? `Live response${liveResponse.duration === null ? '' : ` · ${liveResponse.duration} ms`}`
+                  : selected
+                    ? 'Documented example'
+                    : sending
+                      ? 'Waiting for response…'
+                      : 'No documented response'}
+              </span>
+            </div>
+            <div className="api-template-actions">
+              <ConsoleIconButton label="Copy response" onClick={() => copy(selected ? displayResponseBody(selected.body) : '', 'response')}>
+                {copied === 'response' ? '✓' : <Icon name="copy" />}
+              </ConsoleIconButton>
+              <ConsoleIconButton
+                label={expanded === 'response' ? 'Close expanded response' : 'Expand response'}
+                onClick={() => setExpanded(expanded === 'response' ? '' : 'response')}
+              >
+                <Icon name={expanded === 'response' ? 'close' : 'expand'} />
+              </ConsoleIconButton>
+            </div>
+          </header>
           {responseHeaders.length > 0 && (
-            <details className="res-headers">
+            <details className="api-live-response-headers">
               <summary>Response headers ({responseHeaders.length})</summary>
               <pre>{responseHeaders.map(([name, value]) => `${name}: ${value}`).join('\n')}</pre>
             </details>
           )}
-          <pre
-            className="res-body"
-            style={{
-              color: selected?.error ? '#F8B4C0' : '#DCE3F5',
-              opacity: sending ? 0.4 : 1,
-            }}
-          >
-            {selected ? displayResponseBody(selected.body) : ''}
-          </pre>
-        </div>
+          <div className={`api-template-response-body${selected?.error ? ' error' : ''}`} style={{ opacity: sending ? 0.45 : 1 }}>
+            <CodeLines code={selected ? displayResponseBody(selected.body) : ''} tone="light" />
+          </div>
+        </section>
       </div>
     </div>
   );
