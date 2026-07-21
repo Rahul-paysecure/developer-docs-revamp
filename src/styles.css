@@ -654,10 +654,11 @@ body.dark .doc-editor-actions button, body.dark .doc-editor-message input { back
   justify-content: space-between; gap: 18px; padding: 14px 20px; border-bottom: 1px solid;
 }
 .api-template-card.request .api-template-toolbar {
-  justify-content: flex-end; border-color: #2A3354; background: var(--code-head);
+  justify-content: center; border-color: #2A3354; background: var(--code-head);
 }
 .api-template-card.response .api-template-toolbar { border-color: #D7DCE4; }
 .api-template-actions { display: flex; align-items: center; gap: 7px; }
+.api-template-card.request .api-template-actions { justify-content: center; }
 .api-template-run {
   border: 0; border-radius: 8px; padding: 8px 13px; cursor: pointer; color: #fff;
   background: var(--purple); font: 700 11.5px/1 'Inter', sans-serif; white-space: nowrap;
@@ -740,6 +741,8 @@ body.dark .api-template-card.response .api-template-icon-button { color: #20242C
   .api-template-toolbar { align-items: flex-start; flex-direction: column; padding: 14px; }
   .api-template-actions { width: 100%; flex-wrap: wrap; }
   .api-template-run { margin-right: auto; }
+  .api-template-card.request .api-template-toolbar { align-items: center; }
+  .api-template-card.request .api-template-run { margin-right: 0; }
   .api-template-language-menu { left: 0; right: auto; }
   .api-template-request-body, .api-template-response-body { height: 320px; }
   .api-template-card.expanded { top: calc(var(--topbar-h) + 8px); right: 8px; bottom: 8px; left: 8px; }
