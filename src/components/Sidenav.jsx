@@ -47,13 +47,16 @@ function buildTree(items) {
 
 const SIDENAV_STATE_KEY = 'ps-sidenav-closed-v1';
 
-function readClosedState(navMode, groupKey) {
-  if (typeof window === 'undefined') return false;
+function readClosedState(navMode, groupKey, defaultClosed = false) {
+  if (typeof window === 'undefined') return defaultClosed;
   try {
     const saved = JSON.parse(window.localStorage.getItem(SIDENAV_STATE_KEY) || '{}');
-    return Boolean(saved[navMode]?.[groupKey]);
+    const modeState = saved[navMode] || {};
+    return Object.prototype.hasOwnProperty.call(modeState, groupKey)
+      ? Boolean(modeState[groupKey])
+      : defaultClosed;
   } catch {
-    return false;
+    return defaultClosed;
   }
 }
 
@@ -68,6 +71,35 @@ function saveClosedState(navMode, groupKey, closed) {
   }
 }
 
+function CollapsibleSubcategory({ label, nodes, currentSlug, navMode, stateKey, renderNode }) {
+  const [closed, setClosed] = useState(() => readClosedState(navMode, stateKey, true));
+
+  const toggleClosed = () => {
+    setClosed((current) => {
+      const next = !current;
+      saveClosedState(navMode, stateKey, next);
+      return next;
+    });
+  };
+
+  return (
+    <div className={`nav-subcategory-group${closed ? ' closed' : ''}`}>
+      <button
+        type="button"
+        className="nav-subcategory-toggle"
+        aria-expanded={!closed}
+        onClick={toggleClosed}
+      >
+        <span>{label}</span>
+        <span className="tw" aria-hidden="true">▼</span>
+      </button>
+      <div className="nav-subcategory-items">
+        {nodes.map((node) => renderNode(node, currentSlug))}
+      </div>
+    </div>
+  );
+}
+
 function NavGroup({ group, currentSlug, navMode, groupKey }) {
   const [closed, setClosed] = useState(() => readClosedState(navMode, groupKey));
 
@@ -79,43 +111,76 @@ function NavGroup({ group, currentSlug, navMode, groupKey }) {
     });
   };
 
-  const renderTree = (items) => {
-    let previousCategory = null;
-    let previousSubcategory = null;
+  const renderNode = (node, activeSlug = currentSlug) => {
+    const parentPath = toPath(node.it.h).split('#')[0];
+    const open =
+      parentPath === slugToPath(activeSlug) ||
+      node.subs.some((s) => toPath(s.h).split('#')[0] === slugToPath(activeSlug));
+    return (
+      <React.Fragment key={node.it.t + node.it.h}>
+        <NavLink item={node.it} currentSlug={activeSlug} isSub={false} />
+        {node.subs.length > 0 &&
+          open &&
+          node.subs.map((s) => (
+            <NavLink key={s.t + s.h} item={s} currentSlug={activeSlug} isSub={true} />
+          ))}
+      </React.Fragment>
+    );
+  };
 
-    return buildTree(items).flatMap((node) => {
+  const renderTree = (items) => {
+    let category = null;
+    let subcategory = null;
+    const sections = [];
+
+    buildTree(items).forEach((node) => {
+      if (node.it.category) {
+        category = node.it.category;
+        subcategory = null;
+      }
+      if (node.it.subcategory) subcategory = node.it.subcategory;
+      const previous = sections[sections.length - 1];
+      if (!previous || previous.category !== category || previous.subcategory !== subcategory) {
+        sections.push({ category, subcategory, nodes: [node] });
+      } else {
+        previous.nodes.push(node);
+      }
+    });
+
+    let previousCategory = null;
+    return sections.flatMap((section) => {
       const parts = [];
-      if (node.it.category && node.it.category !== previousCategory) {
+      if (section.category && section.category !== previousCategory) {
         parts.push(
-          <div className="nav-category" key={`category-${node.it.category}`}>
-            {node.it.category}
+          <div className="nav-category" key={`category-${section.category}`}>
+            {section.category}
           </div>
         );
-        previousCategory = node.it.category;
-        previousSubcategory = null;
+        previousCategory = section.category;
       }
-      if (node.it.subcategory && node.it.subcategory !== previousSubcategory) {
+
+      if (section.category === 'APMs' && section.subcategory) {
         parts.push(
-          <div className="nav-subcategory" key={`subcategory-${node.it.category}-${node.it.subcategory}`}>
-            {node.it.subcategory}
-          </div>
+          <CollapsibleSubcategory
+            key={`subcategory-${section.category}-${section.subcategory}`}
+            label={section.subcategory}
+            nodes={section.nodes}
+            currentSlug={currentSlug}
+            navMode={navMode}
+            stateKey={`${groupKey}::${section.category}::${section.subcategory}`}
+            renderNode={renderNode}
+          />
         );
-        previousSubcategory = node.it.subcategory;
+      } else {
+        if (section.subcategory) {
+          parts.push(
+            <div className="nav-subcategory" key={`subcategory-${section.category}-${section.subcategory}`}>
+              {section.subcategory}
+            </div>
+          );
+        }
+        parts.push(...section.nodes.map((node) => renderNode(node)));
       }
-      const parentPath = toPath(node.it.h).split('#')[0];
-      const open =
-        parentPath === slugToPath(currentSlug) ||
-        node.subs.some((s) => toPath(s.h).split('#')[0] === slugToPath(currentSlug));
-      parts.push(
-        <React.Fragment key={node.it.t + node.it.h}>
-          <NavLink item={node.it} currentSlug={currentSlug} isSub={false} />
-          {node.subs.length > 0 &&
-            open &&
-            node.subs.map((s) => (
-              <NavLink key={s.t + s.h} item={s} currentSlug={currentSlug} isSub={true} />
-            ))}
-        </React.Fragment>
-      );
       return parts;
     });
   };
