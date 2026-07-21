@@ -81,10 +81,12 @@ for (const file of pageFiles) {
     tryItCount += (markup.match(/class="explorer try-it"/g) || []).length;
     helpfulCount += (markup.match(/class="helpful"/g) || []).length;
 
-    for (const match of markup.matchAll(
-      /<textarea[^>]*aria-label="Editable cURL request"[^>]*>([\s\S]*?)<\/textarea>/g
-    )) {
-      const curl = match[1];
+    for (const match of markup.matchAll(/\bdata-request-curl="([^"]*)"/g)) {
+      const curl = match[1]
+        .replace(/&quot;/g, '"')
+        .replace(/&#x27;/g, "'")
+        .replace(/&amp;/g, '&')
+        .replace(/&#(?:10|xA);/gi, '\n');
       const hasBrandHeader = /BrandId:\s*YOUR_BRAND_ID/i.test(curl);
       const hasBrandBody = /(?:&quot;|")brand_id(?:&quot;|")\s*:/i.test(curl);
       if (hasBrandHeader) brandHeaderRequestCount += 1;

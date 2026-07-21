@@ -1,5 +1,6 @@
 import React from 'react';
 import { DocLink, Helpful, TryIt } from './PagePrimitives.jsx';
+import ApiConsoleTemplate from './ApiConsoleTemplate.jsx';
 import { validateDocument } from '../content/schema.js';
 import { useStructuredEditor } from '../content/StructuredEditorContext.js';
 
@@ -99,7 +100,7 @@ function Navigation({ block }) {
   );
 }
 
-const TREE_COMPONENTS = { DocLink, Helpful, TryIt };
+const TREE_COMPONENTS = { ApiConsoleTemplate, DocLink, Helpful, TryIt };
 
 function TreeText({ node }) {
   const editor = useStructuredEditor();

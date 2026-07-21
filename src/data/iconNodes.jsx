@@ -154,5 +154,22 @@ export const ICON_NODES = {
   "ban": h(React.Fragment, null,
       h("circle", {"cx":"12","cy":"12","r":"10"}),
       h("path", {"d":"M4.93 4.93l14.14 14.14"})
+  ),
+  "chevron-down": h(React.Fragment, null,
+      h("path", {"d":"M6 9l6 6 6-6"})
+  ),
+  "copy": h(React.Fragment, null,
+      h("rect", {"x":"9","y":"9","width":"13","height":"13","rx":"2"}),
+      h("path", {"d":"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"})
+  ),
+  "edit": h(React.Fragment, null,
+      h("path", {"d":"M12 20h9"}),
+      h("path", {"d":"M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"})
+  ),
+  "expand": h(React.Fragment, null,
+      h("path", {"d":"M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"})
+  ),
+  "close": h(React.Fragment, null,
+      h("path", {"d":"M18 6L6 18M6 6l12 12"})
   )
 };
