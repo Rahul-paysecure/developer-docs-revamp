@@ -2383,38 +2383,6 @@ export const operationsTreeDocument = defineDocument({
             "type": "element",
             "tag": "div",
             "props": {
-              "className": "endpoint-sig"
-            },
-            "children": [
-              {
-                "type": "element",
-                "tag": "span",
-                "props": {
-                  "className": "method get"
-                },
-                "children": [
-                  {
-                    "type": "text",
-                    "id": "operations.span.0150",
-                    "value": "GET"
-                  }
-                ]
-              },
-              {
-                "type": "text",
-                "id": "operations.div.0151",
-                "value": "/external/transactions/payout/list"
-              }
-            ]
-          },
-          {
-            "type": "text",
-            "value": "\n      "
-          },
-          {
-            "type": "element",
-            "tag": "div",
-            "props": {
               "className": "code"
             },
             "children": [
@@ -2439,7 +2407,7 @@ export const operationsTreeDocument = defineDocument({
                       {
                         "type": "text",
                         "id": "operations.span.0152",
-                        "value": "List & action payouts under review"
+                        "value": "Approve or reject a payout under review"
                       }
                     ]
                   },
@@ -2470,45 +2438,8 @@ export const operationsTreeDocument = defineDocument({
                 "children": [
                   {
                     "type": "text",
-                    "id": "operations.pre.0154",
-                    "value": "GET "
-                  },
-                  {
-                    "type": "element",
-                    "tag": "span",
-                    "props": {
-                      "className": "tok-s"
-                    },
-                    "children": [
-                      {
-                        "type": "text",
-                        "id": "operations.span.0155",
-                        "value": "/external/transactions/payout/list?page_no=1&page_size=10&status=error"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": "\n      "
-                  },
-                  {
-                    "type": "element",
-                    "tag": "span",
-                    "props": {
-                      "className": "tok-s"
-                    },
-                    "children": [
-                      {
-                        "type": "text",
-                        "id": "operations.span.0156",
-                        "value": "&payment_method=PAYOUT-SPEI,PAYOUT-INTERAC-ETRANSFER"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
                     "id": "operations.pre.0157",
-                    "value": "\n\nPOST "
+                    "value": "POST "
                   },
                   {
                     "type": "element",

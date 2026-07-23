@@ -133,7 +133,8 @@ The Git adapter should return a record compatible with the local adapter:
 - internal routes, local media, Brand ID placement, cURL execution and the
   editor repository contract remain valid.
 
-Six Postman-derived requests have explicit `sourceExampleGap` metadata because
-the source collection does not contain the missing success/error examples. The
-migration deliberately does not invent response contracts. Those gaps should
-be resolved from a future authoritative Postman export or engineering contract.
+One Postman-derived request has explicit `sourceExampleGap` metadata because
+the Apple Pay Redirect Get Status success example is malformed and has no HTTP
+status metadata. The documentation deliberately does not invent response
+contracts. The gap should be resolved from a corrected authoritative Postman
+example or engineering contract.
