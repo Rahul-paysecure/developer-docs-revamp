@@ -100,6 +100,33 @@ function CollapsibleSubcategory({ label, nodes, currentSlug, navMode, stateKey, 
   );
 }
 
+function CollapsibleCategory({ label, active, navMode, stateKey, children }) {
+  const [closed, setClosed] = useState(() => readClosedState(navMode, stateKey, !active));
+
+  const toggleClosed = () => {
+    setClosed((current) => {
+      const next = !current;
+      saveClosedState(navMode, stateKey, next);
+      return next;
+    });
+  };
+
+  return (
+    <div className={`nav-category-group${closed ? ' closed' : ''}`}>
+      <button
+        type="button"
+        className="nav-category-toggle"
+        aria-expanded={!closed}
+        onClick={toggleClosed}
+      >
+        <span>{label}</span>
+        <span className="tw" aria-hidden="true">▼</span>
+      </button>
+      <div className="nav-category-items">{children}</div>
+    </div>
+  );
+}
+
 function NavGroup({ group, currentSlug, navMode, groupKey }) {
   const [closed, setClosed] = useState(() => readClosedState(navMode, groupKey));
 
@@ -111,7 +138,7 @@ function NavGroup({ group, currentSlug, navMode, groupKey }) {
     });
   };
 
-  const renderNode = (node, activeSlug = currentSlug) => {
+  const renderNode = (node, activeSlug = currentSlug, showAllSubs = false) => {
     const parentPath = toPath(node.it.h).split('#')[0];
     const open =
       parentPath === slugToPath(activeSlug) ||
@@ -120,7 +147,7 @@ function NavGroup({ group, currentSlug, navMode, groupKey }) {
       <React.Fragment key={node.it.t + node.it.h}>
         <NavLink item={node.it} currentSlug={activeSlug} isSub={false} />
         {node.subs.length > 0 &&
-          open &&
+          (open || showAllSubs) &&
           node.subs.map((s) => (
             <NavLink key={s.t + s.h} item={s} currentSlug={activeSlug} isSub={true} />
           ))}
@@ -147,6 +174,57 @@ function NavGroup({ group, currentSlug, navMode, groupKey }) {
       }
     });
 
+    const sectionIsActive = (section) =>
+      section.nodes.some((node) => {
+        const activePath = slugToPath(currentSlug);
+        return (
+          toPath(node.it.h).split('#')[0] === activePath ||
+          node.subs.some((sub) => toPath(sub.h).split('#')[0] === activePath)
+        );
+      });
+
+    const renderSection = (section, keyPrefix, showAllSubs = false) => {
+      if (section.category === 'APMs' && section.subcategory) {
+        return (
+          <CollapsibleSubcategory
+            key={`${keyPrefix}-${section.subcategory}`}
+            label={section.subcategory}
+            nodes={section.nodes}
+            currentSlug={currentSlug}
+            navMode={navMode}
+            stateKey={`${groupKey}::${section.category}::${section.subcategory}`}
+            renderNode={renderNode}
+          />
+        );
+      }
+      return section.nodes.map((node) => renderNode(node, currentSlug, showAllSubs));
+    };
+
+    if (group.collapsibleCategories) {
+      const categories = [];
+      sections.forEach((section) => {
+        const previous = categories[categories.length - 1];
+        if (!previous || previous.category !== section.category) {
+          categories.push({ category: section.category, sections: [section] });
+        } else {
+          previous.sections.push(section);
+        }
+      });
+      return categories.map((category) => (
+        <CollapsibleCategory
+          key={`category-${category.category}`}
+          label={category.category}
+          active={category.sections.some(sectionIsActive)}
+          navMode={navMode}
+          stateKey={`${groupKey}::${category.category}`}
+        >
+          {category.sections.flatMap((section, index) =>
+            renderSection(section, `category-${category.category}-${index}`, true)
+          )}
+        </CollapsibleCategory>
+      ));
+    }
+
     let previousCategory = null;
     return sections.flatMap((section) => {
       const parts = [];
@@ -160,17 +238,7 @@ function NavGroup({ group, currentSlug, navMode, groupKey }) {
       }
 
       if (section.category === 'APMs' && section.subcategory) {
-        parts.push(
-          <CollapsibleSubcategory
-            key={`subcategory-${section.category}-${section.subcategory}`}
-            label={section.subcategory}
-            nodes={section.nodes}
-            currentSlug={currentSlug}
-            navMode={navMode}
-            stateKey={`${groupKey}::${section.category}::${section.subcategory}`}
-            renderNode={renderNode}
-          />
-        );
+        parts.push(renderSection(section, `subcategory-${section.category}`));
       } else {
         if (section.subcategory) {
           parts.push(
