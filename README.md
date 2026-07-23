@@ -1,6 +1,6 @@
 # Paysecure Developer Docs — React
 
-The Paysecure documentation is a React-native Vite application. All 99
+The Paysecure documentation is a React-native Vite application. All 100
 documentation pages render from structured content records through thin React
 route components. Page bodies are no longer standalone HTML files, generated
 `React.createElement` modules, or HTML strings stored in JSON.
@@ -33,7 +33,9 @@ Vite prints the local preview address, normally `http://localhost:5173`.
 | Theme and responsive design | `src/styles.css` |
 | Tenant configuration | `src/tenants/` |
 | OpenAPI specification | `openapi/paysecure.openapi.yaml` |
-| Admin content persistence adapter | `src/content/contentRepository.js` |
+| Browser and Git content repository adapters | `src/content/contentRepository.js` |
+| Published editor overrides | `src/content/overrides/` |
+| Authenticated editor functions | `netlify/functions/editor-*.mjs` |
 | Structured content schema | `src/content/schema.js` |
 | Hand-authored block records | `src/content/pages/` |
 | Fidelity-preserving tree records | `src/content/trees/` |
@@ -68,20 +70,26 @@ supports:
 - cancelling unsaved changes or resetting a page to its structured source;
 - exporting all local edits as JSON for backup or migration.
 
-This local phase is intentionally not access controlled and should not be
-treated as a production admin system. In a production build the editor is only
-shown when the page is opened with `?admin=1`; real authentication must be added
-before enabling that route for merchants.
+Local development deliberately uses browser storage and is not access
+controlled. A production build switches to the Git-backed adapter. Open a page
+with `?admin=1`, sign in through company SSO, edit the highlighted fields, and
+select **Create pull request**. The server validates the stable field IDs and
+page revision, creates a short-lived branch through a GitHub App, opens a pull
+request, and returns its Netlify Deploy Preview.
+
+No GitHub or SSO credential is sent to the browser. A page cannot receive a
+second editor pull request while its first editor change is under review, and a
+save is rejected if the page source changed after it was loaded.
 
 The editor does not serialise or render HTML. It stores text overrides against
 stable field IDs such as `field/quickstart.h1.0001`, then applies them through
 the structured renderer. API request contracts remain managed by structured
 `TryIt` properties and the Postman parity gate.
 
-The UI depends on an async content repository contract rather than calling
-`localStorage` directly. The planned Git implementation can replace the local
-adapter and turn the same save action into an authenticated commit. See
-`docs/content-editing-architecture.md`.
+After review and merge, the committed JSON record in
+`src/content/overrides/<slug>.json` is applied at build time. See
+`docs/content-editing-architecture.md` for the data model and
+`docs/git-backed-editor-runbook.md` for setup and operations.
 
 Source editing is available in `src/content/pages/` and `src/content/trees/`;
 Vite hot reloads the page while `npm run dev` is running. Stable IDs are content
@@ -118,7 +126,7 @@ Add `--sync` only when intentionally merging missing Postman request and respons
 The verification gate:
 
 - renders every page through React;
-- requires all 99 routes to expose valid structured documents;
+- requires all 100 routes to expose valid structured documents;
 - requires every meaningful tree text field to have a unique stable ID;
 - validates all structured `TryIt` contracts and explicit source-example gaps;
 - checks that the manifest and page modules agree;
@@ -126,7 +134,8 @@ The verification gate:
 - checks internal page routes and local media files;
 - treats React DOM warnings as failures;
 - counts interactive request and feedback components.
-- verifies the local content repository and editor rendering contract.
+- verifies the local and Git repository adapters, signed sessions, CSRF,
+  conflict handling, field validation, and editor rendering contract.
 
 ## Deploy to Netlify
 
