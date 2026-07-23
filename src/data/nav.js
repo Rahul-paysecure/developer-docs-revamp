@@ -70,8 +70,8 @@ export const NAV_API = [
       { t: 'Errors', h: '/api-reference#errors', i: 'alert' }
     ]},
     { label: 'Core · Purchases', items: [
-      { t: 'The purchase object', h: '/api-reference#purchase-object', i: 'box' },
       { t: 'Create a purchase', h: '/api-reference#create-purchase', i: 'plus' },
+      { t: 'The purchase object', h: '/api-reference#purchase-object', i: 'box' },
       { t: 'Get status', h: '/api-reference#get-purchase', i: 'eye' },
       { t: 'Cancel', h: '/api-reference#capture', i: 'xcircle' },
       { t: 'Refund', h: '/api-reference#refund', i: 'rotate' }
@@ -142,15 +142,13 @@ export const NAV_API = [
       { t: 'On Ramp (crypto)', h: '/api-onramp', i: 'crypto' },
       { t: 'PayIn', h: '/api-onramp#payin', i: 'coins', sub: true }
     ]},
-    { label: 'Features', items: [
+    { label: 'Products', items: [
+      { t: 'Cashier & Sessions', h: '/api-cashier', i: 'cart' },
+      { t: 'Network tokenisation', h: '/api-tokenisation', i: 'token' },
+      { t: 'Save a Card', h: '/api-save-a-card', i: 'card', sub: true },
       { t: 'Recurring & mandates', h: '/api-recurring', i: 'repeat' },
       { t: 'Pre-authorization', h: '/api-preauth', i: 'clock' },
-      { t: 'Network tokenisation', h: '/api-tokenisation', i: 'token' },
-      { t: 'Save a Card', h: '/api-save-a-card', i: 'card', sub: true }
-    ]},
-    { label: 'Platform & operations', items: [
       { t: 'Trust Score', h: '/api-trust-score', i: 'alert' },
-      { t: 'Cashier & Sessions', h: '/api-cashier', i: 'cart' },
       { t: 'Partial refunds', h: '/api-partial-refunds', i: 'rotate' },
       { t: 'Payout manual review', h: '/api-payout-review', i: 'send' },
       { t: 'Transaction reporting', h: '/api-transaction-reporting', i: 'chart' }
