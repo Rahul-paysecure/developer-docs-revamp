@@ -66,15 +66,13 @@ export const NAV_API = [
     { label: 'API Reference', items: [
       { t: 'Overview & authentication', h: '/api-reference', i: 'book' },
       { t: 'Request headers', h: '/api-reference#headers', i: 'list' },
-      { t: 'Amounts & currencies', h: '/api-reference#amounts', i: 'coins' },
-      { t: 'Errors', h: '/api-reference#errors', i: 'alert' }
-    ]},
-    { label: 'Core · Purchases', items: [
-      { t: 'Create a purchase', h: '/api-reference#create-purchase', i: 'plus' },
       { t: 'The purchase object', h: '/api-reference#purchase-object', i: 'box' },
+      { t: 'Create a purchase', h: '/api-reference#create-purchase', i: 'plus' },
       { t: 'Get status', h: '/api-reference#get-purchase', i: 'eye' },
       { t: 'Cancel', h: '/api-reference#capture', i: 'xcircle' },
-      { t: 'Refund', h: '/api-reference#refund', i: 'rotate' }
+      { t: 'Refund', h: '/api-reference#refund', i: 'rotate' },
+      { t: 'Amounts & currencies', h: '/api-reference#amounts', i: 'coins' },
+      { t: 'Errors', h: '/api-reference#errors', i: 'alert' }
     ]},
     { label: 'Payment Methods', collapsibleCategories: true, items: [
       { t: 'Cards (S2S)', h: '/api-cards', i: 'card', category: 'Cards' },
