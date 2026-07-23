@@ -3,9 +3,6 @@ export const LOGO_COLOR = "https://content.pstmn.io/e78622ee-0bde-4eb7-a86c-3977
 export const LOGO_WHITE = "https://content.pstmn.io/2b04ee0f-2006-4464-a8ab-d91bfdca84ed/UGF5c2VjdXJlIGxvZ28gd2hpdGUgaG9yaXpvbnRhbCAoNikucG5n";
 
 export const NAV_GUIDES = [
-    { solo: true, items: [
-      { t: 'Guides overview', h: '/guides', i: 'home' }
-    ]},
     { label: 'Get Started', items: [
       { t: 'Getting started', h: '/getting-started', i: 'book' },
       { t: 'Quickstart · first payment', h: '/quickstart', i: 'zap' },
@@ -19,6 +16,7 @@ export const NAV_GUIDES = [
     { label: 'Products', items: [
       { t: 'Payments', h: '/product-payments', i: 'coins' },
       { t: 'Payouts', h: '/product-payouts', i: 'send' },
+      { t: 'Payment methods overview', h: '/payment-methods', i: 'globe' },
       { t: 'Cashier', h: '/product-cashier', i: 'cart' },
       { t: 'Tokenisation', h: '/product-tokenisation', i: 'token' },
       { t: 'Save a Card', h: '/save-a-card', i: 'card', sub: true },
@@ -26,16 +24,15 @@ export const NAV_GUIDES = [
       { t: 'Pre-authorisation', h: '/product-preauth', i: 'clock' },
       { t: 'Reporting', h: '/product-reporting', i: 'chart' }
     ]},
-    { label: 'Payment Methods', items: [
-      { t: 'Overview', h: '/payment-methods', i: 'globe', category: 'Overview' },
+    { label: 'Payment Methods', collapsibleCategories: true, items: [
       { t: 'Cards', h: '/cards', i: 'card', category: 'Cards' },
       { t: '2D payments', h: '/cards-2d', i: 'send', sub: true },
       { t: '3D Secure', h: '/3ds', i: 'shield', sub: true },
-      { t: 'Virtual Cards Payout', h: '/virtual-cards-payout', i: 'card' },
       { t: 'Google Pay', h: '/googlepay', i: 'wallet', category: 'APMs', subcategory: 'Wallets' },
       { t: 'Apple Pay', h: '/applepay', i: 'wallet' },
       { t: 'PayPal', h: '/paypal', i: 'wallet' },
       { t: 'Skrill', h: '/skrill', i: 'wallet' },
+      { t: 'Virtual Cards Payout', h: '/virtual-cards-payout', i: 'card', subcategory: 'Virtual cards' },
       { t: 'Interac e-Transfer', h: '/interac-etransfer', i: 'bank', subcategory: 'Open banking & transfers' },
       { t: 'Interac Request Money', h: '/interac-request-money', i: 'bank' },
       { t: 'Interac Express', h: '/interac-express', i: 'bank' },
@@ -54,10 +51,7 @@ export const NAV_GUIDES = [
       { t: 'Paymint', h: '/paymint', i: 'crypto', subcategory: 'Crypto & on-ramp' },
       { t: 'CryptoBridge', h: '/cryptobridge', i: 'crypto' },
       { t: 'Pay with Crypto', h: '/pay-with-crypto', i: 'crypto' },
-      { t: 'On Ramp (crypto)', h: '/onramp', i: 'crypto' },
-      { t: 'Interac & bank APMs', h: '/payment-methods#interac', i: 'bank', category: 'Explore' },
-      { t: 'Crypto', h: '/payment-methods#crypto', i: 'crypto' },
-      { t: 'All methods A–Z', h: '/payment-methods#all-methods', i: 'list' }
+      { t: 'On Ramp (crypto)', h: '/onramp', i: 'crypto' }
     ]},
     { label: 'Developer Resources', items: [
       { t: 'Webhooks', h: '/webhooks', i: 'hook' },
