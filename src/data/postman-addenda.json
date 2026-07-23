@@ -112,9 +112,9 @@
       ],
       "status": "202 Accepted",
       "response": {
-        "purchaseId": "6a1d26a3d373e5fd3c44ae14",
+        "purchaseId": "64bfdb7df63e36669499e82f",
         "client": {
-          "customerId": "NA",
+          "customerId": "64bfdb7df63e36669499e7a1",
           "email": "user@example.com",
           "phone": "+15555550123",
           "street_address": "1 Test Street",
@@ -203,7 +203,7 @@
         "taxAmount": 0,
         "surcharge": 0,
         "surchargeType": "",
-        "sessionId": "",
+        "sessionId": "64bfdb7df63e36669499e6b2",
         "refund_availability": "NONE",
         "refundable_amount": 0,
         "success_redirect": "https://merchant.example/success-redirect",
@@ -214,13 +214,14 @@
         "failure_callback": "https://merchant.example/failure-callback",
         "platform": "API",
         "created_from_ip": "203.0.113.10",
-        "checkout_url": "https://test4.paymentsclub.net/payments/c3f2eee71c5824b75c7b52ff41e76814/",
-        "direct_post_url": "https://test4.paymentsclub.net/api/v1/p/6a1d26a3d373e5fd3c44ae14/",
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session",
         "payoutProcess": false
       },
-      "sourceExampleGap": {
-        "missing": ["error"],
-        "reason": "The merchant-facing Postman request has no saved error response; no response was inferred during migration."
+      "errorStatus": "401 Unauthorized",
+      "errorResponse": {
+        "message": "Incorrect secret_key",
+        "code": "authentication_failed"
       }
     }
   },
@@ -234,9 +235,152 @@
     "url": "/payment/{purchaseId}",
     "config": {
       "fields": [],
-      "sourceExampleGap": {
-        "missing": ["success"],
-        "reason": "The merchant-facing Postman request has no saved success response; no response was inferred during migration."
+      "status": "200 OK",
+      "response": {
+        "purchaseId": "64bfdb7df63e36669499e82f",
+        "client": {
+          "bank_account": "",
+          "bank_code": "",
+          "email": "user@example.com",
+          "phone": "+15555550123",
+          "full_name": "Test User",
+          "date_of_birth": "1990-01-01",
+          "personal_code": "",
+          "street_address": "1 Test Street",
+          "country": "IN",
+          "city": "123",
+          "zip_code": "10001",
+          "shipping_street_address": "1 Test Street",
+          "shipping_country": "",
+          "shipping_city": "",
+          "shipping_zip_code": "10001",
+          "cc": [],
+          "bcc": [],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": "",
+          "stateCode": "ca"
+        },
+        "updated_on": 1690296521,
+        "type": "purchase",
+        "force_recurring": false,
+        "created_on": 1690295168,
+        "purchase": {
+          "currency": "USD",
+          "products": [
+            {
+              "name": "Test User",
+              "quantity": 1,
+              "price": 9,
+              "discount": 0,
+              "tax_percent": "0.00"
+            }
+          ],
+          "total": 9,
+          "language": "en",
+          "notes": "",
+          "debt": 0,
+          "total_formatted": 1,
+          "request_client_details": [],
+          "timezone": "America/Edmonton",
+          "email_message": "user@example.com"
+        },
+        "payment": {
+          "is_outgoing": false,
+          "payment_type": "PURCHASE",
+          "amount": 9,
+          "currency": "USD",
+          "net_amount": 9,
+          "fee_amount": 10.2591,
+          "pending_amount": 0,
+          "pending_unfreeze_on": null,
+          "description": "",
+          "paid_on": 1690295205,
+          "remote_paid_on": 1690295205
+        },
+        "issuer_details": {
+          "website": "",
+          "legal_street_address": "1 Test Street",
+          "legal_country": "",
+          "legal_city": "",
+          "legal_zip_code": "10001",
+          "bank_accounts": [
+            {
+              "bank_account": "",
+              "bank_code": ""
+            }
+          ],
+          "legal_name": "Test Merchant",
+          "brand_name": "Test Merchant",
+          "registration_number": "",
+          "tax_number": ""
+        },
+        "transaction_data": {
+          "payment_method": "",
+          "flow": "payform",
+          "extra": {
+            "expiry_month": "10",
+            "amount": 9,
+            "card_issuer": "1-800-432-3117",
+            "masked_pan": "411111XXXXXX1111",
+            "card_brand": "VISA",
+            "card_issuer_country": "US",
+            "cardholder_name": "Test User",
+            "expiry_year": "23"
+          },
+          "country": "",
+          "attempts": [
+            {
+              "client_ip": "203.0.113.10",
+              "type": "execute",
+              "payment_method": "VISA",
+              "flow": "payform",
+              "successful": true,
+              "country": "US",
+              "processing_time": 1690295205,
+              "extra": {
+                "expiry_month": "10",
+                "amount": 9,
+                "card_issuer": "1-800-432-3117",
+                "masked_pan": "411111XXXXXX1111",
+                "card_brand": "VISA",
+                "card_issuer_country": "US",
+                "cardholder_name": "Test User",
+                "expiry_year": "23"
+              }
+            }
+          ]
+        },
+        "status": "PAID",
+        "status_history": [
+          {
+            "status": "created",
+            "timestamp": 1690295168
+          }
+        ],
+        "viewedOn": 1690299929,
+        "is_test": false,
+        "brand_id": "{{BrandId}}",
+        "merchantRef": "order-12345",
+        "send_receipt": false,
+        "is_recurring_token": false,
+        "skip_capture": false,
+        "reference_generated": "PS192",
+        "issued": "2023-07-25",
+        "due": 1690295168,
+        "refund_upto": 1705843623,
+        "cc_descriptor": "test-cardeye",
+        "refund_availability": "NONE",
+        "refundable_amount": 9,
+        "success_redirect": "https://merchant.example/success-redirect",
+        "failure_redirect": "https://merchant.example/failure-redirect",
+        "cancel_redirect": "https://merchant.example/cancel-redirect",
+        "success_callback": "https://merchant.example/success-callback",
+        "platform": "API",
+        "created_from_ip": "203.0.113.10",
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session"
       },
       "errorStatus": "400 Bad Request",
       "errorResponse": {
@@ -399,12 +543,12 @@
         "success_callback": "https://merchant.example/success-callback",
         "platform": "API",
         "created_from_ip": "203.0.113.10",
-        "checkout_url": "http://18.214.100.20/payments/64bfdb7df63e36669499e82f/",
-        "direct_post_url": "http://18.214.100.20/api/v1/p/64bfdb7df63e36669499e82f/"
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session"
       },
       "errorStatus": "202 Accepted",
       "errorResponse": {
-        "purchaseId": "64bfd7c9f63e36669499e779",
+        "purchaseId": "64bfdb7df63e36669499e82f",
         "client": {
           "bank_account": "",
           "bank_code": "",
@@ -536,8 +680,8 @@
         "success_callback": "https://merchant.example/success-callback",
         "platform": "API",
         "created_from_ip": "203.0.113.10",
-        "checkout_url": "http://18.214.100.20/payments/64bfd7c9f63e36669499e779/",
-        "direct_post_url": "http://18.214.100.20/api/v1/p/64bfd7c9f63e36669499e779/"
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session"
       }
     }
   },
@@ -555,7 +699,7 @@
       "response": {
         "purchaseId": "64bfdb7df63e36669499e82f",
         "client": {
-          "customerId": "NA",
+          "customerId": "64bfdb7df63e36669499e7a1",
           "email": "user@example.com",
           "phone": "+15555550123",
           "full_name": "Test User",
@@ -684,8 +828,8 @@
         "success_callback": "https://merchant.example/success-callback",
         "platform": "API",
         "created_from_ip": "203.0.113.10",
-        "checkout_url": "http://18.214.100.20/payments/64bfdb7df63e36669499e82f/",
-        "direct_post_url": "http://18.214.100.20/api/v1/p/64bfdb7df63e36669499e82f/"
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session"
       },
       "errorStatus": "400 Bad Request",
       "errorResponse": {
@@ -706,7 +850,7 @@
       "fields": [],
       "status": "202 Accepted",
       "response": {
-        "purchaseId": "64bff4fff63e36669499e9c8",
+        "purchaseId": "64bfdb7df63e36669499e82f",
         "client": {
           "email": "user@example.com",
           "phone": "+15555550123",
@@ -802,8 +946,8 @@
         "success_callback": "https://merchant.example/success-callback",
         "platform": "API",
         "created_from_ip": "203.0.113.10",
-        "checkout_url": "http://18.214.100.20/payments/64bff4fff63e36669499e9c8/",
-        "direct_post_url": "http://18.214.100.20/api/v1/p/64bff4fff63e36669499e9c8/"
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session"
       },
       "errorStatus": "400 Bad Request",
       "errorResponse": {
@@ -817,14 +961,14 @@
     "id": "live-collection-6",
     "title": "Google Pay seamless — decrypted flow",
     "description": "Create a purchase using the decrypted Google Pay payload contract.",
-    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Google Pay (Seamless) > APIs > Purchases (Decrypted Flow)",
+    "source": "Payment Methods > 🌎 Google Pay (Seamless) > APIs > Purchases (Decrypted Flow)",
     "method": "POST",
     "url": "/purchases",
     "config": {
       "fields": [
         {
           "k": "client.customerId",
-          "v": "NA",
+          "v": "64bfdb7df63e36669499e7a1",
           "req": false
         },
         {
@@ -985,9 +1129,9 @@
       ],
       "status": "200 OK",
       "response": {
-        "purchaseId": "69cce01f5bae56fd5547a993",
+        "purchaseId": "64bfdb7df63e36669499e82f",
         "client": {
-          "customerId": "NA",
+          "customerId": "64bfdb7df63e36669499e7a1",
           "email": "user@example.com",
           "full_name": "Test User",
           "date_of_birth": "1990-01-01",
@@ -1076,7 +1220,7 @@
         "taxAmount": 0,
         "surcharge": 0,
         "surchargeType": "",
-        "sessionId": "",
+        "sessionId": "64bfdb7df63e36669499e6b2",
         "refund_availability": "NONE",
         "refundable_amount": 0,
         "success_redirect": "https://merchant.example/success-redirect",
@@ -1087,8 +1231,8 @@
         "failure_callback": "https://merchant.example/failure-callback",
         "platform": "API",
         "created_from_ip": "203.0.113.10",
-        "checkout_url": "https://api.choicepay.ca/payments/6b5a5977ac8e022facb31f3346f61ed0/",
-        "direct_post_url": "https://api.choicepay.ca/api/v1/p/69cce01f5bae56fd5547a993/",
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session",
         "payoutProcess": false
       },
       "errorStatus": "400 Bad Request",
@@ -1110,10 +1254,10 @@
       "fields": [],
       "status": "200 OK",
       "response": {
-        "sessionUrl": "https://api.choicepay.ca/payment-session/6963533a0a18ea65153a81e7/",
+        "sessionUrl": "https://checkout.example/payment-session/example-session",
         "brandId": "brand_id_value",
-        "customerId": "69034a5a61b460084d20c23b",
-        "sessionId": "6963533a0a18ea65153a81e7",
+        "customerId": "64bfdb7df63e36669499e7a1",
+        "sessionId": "64bfdb7df63e36669499e6b2",
         "expiryOn": 1768117950,
         "createdOn": 1768117050
       },
@@ -1129,16 +1273,16 @@
     "id": "live-collection-8",
     "title": "Google Pay seamless — get status",
     "description": "Retrieve the latest seamless Google Pay purchase state.",
-    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Google Pay (Seamless) > APIs > Get Status",
+    "source": "Payment Methods > 🌎 Google Pay (Seamless) > APIs > Get Status",
     "method": "GET",
     "url": "/purchases/{purchaseId}",
     "config": {
       "fields": [],
       "status": "200 OK",
       "response": {
-        "purchaseId": "69cce01f5bae56fd5547a993",
+        "purchaseId": "64bfdb7df63e36669499e82f",
         "client": {
-          "customerId": "NA",
+          "customerId": "64bfdb7df63e36669499e7a1",
           "email": "user@example.com",
           "full_name": "Test User",
           "date_of_birth": "1990-01-01",
@@ -1227,7 +1371,7 @@
         "taxAmount": 0,
         "surcharge": 0,
         "surchargeType": "",
-        "sessionId": "",
+        "sessionId": "64bfdb7df63e36669499e6b2",
         "refund_availability": "NONE",
         "refundable_amount": 0,
         "success_redirect": "https://merchant.example/success-redirect",
@@ -1238,8 +1382,8 @@
         "failure_callback": "https://merchant.example/failure-callback",
         "platform": "API",
         "created_from_ip": "203.0.113.10",
-        "checkout_url": "https://api.choicepay.ca/payments/6b5a5977ac8e022facb31f3346f61ed0/",
-        "direct_post_url": "https://api.choicepay.ca/api/v1/p/69cce01f5bae56fd5547a993/",
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session",
         "payoutProcess": false
       },
       "errorStatus": "400 Bad Request",
@@ -1254,7 +1398,7 @@
     "id": "live-collection-9",
     "title": "Apple Pay seamless — decrypted flow",
     "description": "Create a purchase using the decrypted Apple Pay payload contract.",
-    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay (Seamless) > APIs > Purchases (Decrypted Flow)",
+    "source": "Payment Methods > 🌎 Apple Pay (Seamless) > APIs > Purchases (Decrypted Flow)",
     "method": "POST",
     "url": "/purchases",
     "config": {
@@ -1347,9 +1491,9 @@
       ],
       "status": "200 OK",
       "response": {
-        "purchaseId": "69cce01f5bae56fd5547a993",
+        "purchaseId": "64bfdb7df63e36669499e82f",
         "client": {
-          "customerId": "NA",
+          "customerId": "64bfdb7df63e36669499e7a1",
           "email": "user@example.com",
           "full_name": "Test User",
           "date_of_birth": "1990-01-01",
@@ -1438,7 +1582,7 @@
         "taxAmount": 0,
         "surcharge": 0,
         "surchargeType": "",
-        "sessionId": "",
+        "sessionId": "64bfdb7df63e36669499e6b2",
         "refund_availability": "NONE",
         "refundable_amount": 0,
         "success_redirect": "https://merchant.example/success-redirect",
@@ -1449,8 +1593,8 @@
         "failure_callback": "https://merchant.example/failure-callback",
         "platform": "API",
         "created_from_ip": "203.0.113.10",
-        "checkout_url": "https://api.choicepay.ca/payments/6b5a5977ac8e022facb31f3346f61ed0/",
-        "direct_post_url": "https://api.choicepay.ca/api/v1/p/69cce01f5bae56fd5547a993/",
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session",
         "payoutProcess": false
       },
       "errorStatus": "400 Bad Request",
@@ -1472,10 +1616,10 @@
       "fields": [],
       "status": "200 OK",
       "response": {
-        "sessionUrl": "https://api.choicepay.ca/payment-session/6963533a0a18ea65153a81e7/",
+        "sessionUrl": "https://checkout.example/payment-session/example-session",
         "brandId": "brand_id_value",
-        "customerId": "69034a5a61b460084d20c23b",
-        "sessionId": "6963533a0a18ea65153a81e7",
+        "customerId": "64bfdb7df63e36669499e7a1",
+        "sessionId": "64bfdb7df63e36669499e6b2",
         "expiryOn": 1768117950,
         "createdOn": 1768117050
       },
@@ -1496,14 +1640,16 @@
     "url": "/purchases/{purchaseId}",
     "config": {
       "fields": [],
-      "sourceExampleGap": {
-        "missing": ["success"],
-        "reason": "The merchant-facing Postman request has no saved success response; no response was inferred during migration."
-      },
       "errorStatus": "400 Bad Request",
       "errorResponse": {
         "message": "Error Message",
         "code": "error_code"
+      },
+      "sourceExampleGap": {
+        "missing": [
+          "success"
+        ],
+        "reason": "The merchant-facing Postman request does not contain a valid saved response with HTTP status metadata; no response was inferred."
       }
     }
   },
@@ -1512,16 +1658,16 @@
     "id": "live-collection-12",
     "title": "Get Apple Pay purchase status",
     "description": "Retrieve the latest Apple Pay purchase state.",
-    "source": "Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay (Seamless) > APIs > Get Status",
+    "source": "Payment Methods > 🌎 Apple Pay (Seamless) > APIs > Get Status",
     "method": "GET",
     "url": "/purchases/{purchaseId}",
     "config": {
       "fields": [],
       "status": "200 OK",
       "response": {
-        "purchaseId": "69cce01f5bae56fd5547a993",
+        "purchaseId": "64bfdb7df63e36669499e82f",
         "client": {
-          "customerId": "NA",
+          "customerId": "64bfdb7df63e36669499e7a1",
           "email": "user@example.com",
           "full_name": "Test User",
           "date_of_birth": "1990-01-01",
@@ -1610,7 +1756,7 @@
         "taxAmount": 0,
         "surcharge": 0,
         "surchargeType": "",
-        "sessionId": "",
+        "sessionId": "64bfdb7df63e36669499e6b2",
         "refund_availability": "NONE",
         "refundable_amount": 0,
         "success_redirect": "https://merchant.example/success-redirect",
@@ -1621,8 +1767,8 @@
         "failure_callback": "https://merchant.example/failure-callback",
         "platform": "API",
         "created_from_ip": "203.0.113.10",
-        "checkout_url": "https://api.choicepay.ca/payments/6b5a5977ac8e022facb31f3346f61ed0/",
-        "direct_post_url": "https://api.choicepay.ca/api/v1/p/69cce01f5bae56fd5547a993/",
+        "checkout_url": "https://checkout.example/payments/example-session",
+        "direct_post_url": "https://checkout.example/api/v1/p/example-session",
         "payoutProcess": false
       },
       "errorStatus": "400 Bad Request",
@@ -1634,49 +1780,91 @@
   },
   {
     "slug": "api-payout-review",
-    "id": "live-collection-13",
-    "title": "List payouts pending manual review",
-    "description": "Retrieve payouts using the filters in the live collection.",
-    "source": "Payout Manual Review > List Payouts",
-    "method": "GET",
-    "url": "/external/transactions/payout/list?page_no=1&page_size=10&status=error&timezone=Asia%2FKolkata&start_date=2026-01-01+00%3A00%3A00&end_date=2026-01-01+00%3A00%3A00&payment_method=PAYOUT-SPEI%2C+PAYOUT-INTERAC-ETRANSFER&email=user%40example.com&customer_segment=NA",
-    "config": {
-      "fields": [],
-      "sourceExampleGap": {
-        "missing": ["success", "error"],
-        "reason": "The Payout Manual Review Postman folder has no saved responses; no response was inferred during migration."
-      }
-    }
-  },
-  {
-    "slug": "api-payout-review",
     "id": "live-collection-14",
-    "title": "Approve payout without remarks",
-    "description": "Approve a payout without submitting a remarks body.",
+    "title": "Approve payout",
+    "description": "Approve a payout that is pending manual review.",
     "source": "Payout Manual Review > Approve Payout",
     "method": "POST",
     "url": "/payouts/{payout_id}/action?action=approve",
     "config": {
-      "fields": [],
-      "sourceExampleGap": {
-        "missing": ["success", "error"],
-        "reason": "The Payout Manual Review Postman folder has no saved responses; no response was inferred during migration."
+      "fields": [
+        {
+          "k": "remarks",
+          "v": "Verified against invoice #4821",
+          "req": false
+        },
+        {
+          "k": "reviewed_by",
+          "v": "compliance_team_lead",
+          "req": false
+        }
+      ],
+      "status": "200 OK",
+      "response": {
+        "status": "success",
+        "data": {
+          "payout_id": "64bfdb7df63e36669499e9d3",
+          "previous_status": "pending_review",
+          "current_status": "paid",
+          "action_performed": "approve",
+          "reviewed_by": "compliance_team_lead",
+          "reviewed_at": "2026-04-16T10:30:45Z",
+          "remarks": "Verified against invoice #4821"
+        }
+      },
+      "errorStatus": "200 OK",
+      "errorResponse": {
+        "status": "error",
+        "data": {
+          "payout_id": "64bfdb7df63e36669499e9d3",
+          "current_status": "paid",
+          "message": "Payout already processed"
+        }
       }
     }
   },
   {
     "slug": "api-payout-review",
     "id": "live-collection-15",
-    "title": "Reject payout without remarks",
-    "description": "Reject a payout without submitting a remarks body.",
+    "title": "Reject payout",
+    "description": "Reject a payout that is pending manual review.",
     "source": "Payout Manual Review > Reject Payout",
     "method": "POST",
     "url": "/payouts/{payout_id}/action?action=reject",
     "config": {
-      "fields": [],
-      "sourceExampleGap": {
-        "missing": ["success", "error"],
-        "reason": "The Payout Manual Review Postman folder has no saved responses; no response was inferred during migration."
+      "fields": [
+        {
+          "k": "remarks",
+          "v": "Failed KYC verification",
+          "req": false
+        },
+        {
+          "k": "reviewed_by",
+          "v": "risk_team_admin",
+          "req": false
+        }
+      ],
+      "status": "200 OK",
+      "response": {
+        "status": "success",
+        "data": {
+          "payout_id": "64bfdb7df63e36669499e9d3",
+          "previous_status": "pending_review",
+          "current_status": "error",
+          "action_performed": "reject",
+          "reviewed_by": "risk_team_admin",
+          "reviewed_at": "2026-04-16T10:31:20Z",
+          "remarks": "Failed KYC verification"
+        }
+      },
+      "errorStatus": "200 OK",
+      "errorResponse": {
+        "status": "error",
+        "data": {
+          "payout_id": "64bfdb7df63e36669499e9d3",
+          "current_status": "error",
+          "message": "Payout already processed"
+        }
       }
     }
   }

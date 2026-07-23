@@ -27,9 +27,9 @@ are invited.
 - API fields, endpoints, enums, examples, webhooks, currencies, and status codes
   must still come from an authoritative source. Do not infer missing contract
   details merely because a second reviewer is not yet configured.
-- The six existing `sourceExampleGap` records cannot be replaced with inferred
-  examples. They require a fresh authoritative Postman example or written
-  engineering confirmation.
+- The remaining Apple Pay Redirect `sourceExampleGap` cannot be replaced with
+  an inferred example. It requires a valid saved Postman response with HTTP
+  status metadata or written engineering confirmation.
 
 ## When collaborators are added
 

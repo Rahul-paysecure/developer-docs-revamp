@@ -453,6 +453,10 @@ function sanitizedScalar(field, value) {
   const lower = field.toLowerCase();
   if (typeof value === 'string' && /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i.test(value)) return 'user@example.com';
   if (lower.includes('merchantcustomerid')) return 'merchant-customer-12345';
+  if (/(?:^|\.)(?:purchaseid|purchase_id)$/.test(lower)) return '64bfdb7df63e36669499e82f';
+  if (/(?:^|\.)(?:payoutid|payout_id)$/.test(lower)) return '64bfdb7df63e36669499e9d3';
+  if (/(?:^|\.)(?:customerid|customer_id)$/.test(lower)) return '64bfdb7df63e36669499e7a1';
+  if (/(?:^|\.)(?:sessionid|session_id)$/.test(lower)) return '64bfdb7df63e36669499e6b2';
   if (lower === 'brand_id' || lower.endsWith('.brand_id')) return '{{BrandId}}';
   if (lower.includes('merchantref') || lower.includes('merchant_reference')) return 'order-12345';
   if (lower.includes('email')) return 'user@example.com';
@@ -477,6 +481,9 @@ function sanitizedScalar(field, value) {
     /(?:^|\.)(?:clientip|merchantip|remoteip|ipaddress|createdfromip)$/.test(lower)
   ) return '203.0.113.10';
   if (lower.endsWith('avatarurl') || lower.endsWith('avatar_url')) return 'https://merchant.example/avatar.png';
+  if (lower.endsWith('checkout_url')) return 'https://checkout.example/payments/example-session';
+  if (lower.endsWith('direct_post_url')) return 'https://checkout.example/api/v1/p/example-session';
+  if (lower.endsWith('sessionurl') || lower.endsWith('session_url')) return 'https://checkout.example/payment-session/example-session';
   if (/(?:redirect|callback)$/.test(lower)) return `https://merchant.example/${lower.replace(/_/g, '-')}`;
   if (typeof value === 'string' && /rahul/i.test(value)) return 'Test User';
   if (value && typeof value === 'object') return JSON.stringify(value);
@@ -523,16 +530,15 @@ const addendumSpecs = [
   ['Payment Methods > 💳 Card Payments > APIs > Get Status', 'api-cards', 'Get card purchase status', 'Retrieve the latest card purchase state.'],
   ['Payment Methods > 💳 Card Payments > APIs > Refund', 'api-cards', 'Refund a card purchase', 'Initiate a refund for the purchase.'],
   ['Payment Methods > 💳 Card Payments > APIs > Cancel', 'api-cards', 'Cancel a card purchase', 'Cancel a purchase that has not reached a terminal state.'],
-  ['Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Google Pay (Seamless) > APIs > Purchases (Decrypted Flow)', 'api-googlepay', 'Google Pay seamless — decrypted flow', 'Create a purchase using the decrypted Google Pay payload contract.'],
+  ['Payment Methods > 🌎 Google Pay (Seamless) > APIs > Purchases (Decrypted Flow)', 'api-googlepay', 'Google Pay seamless — decrypted flow', 'Create a purchase using the decrypted Google Pay payload contract.'],
   ['Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Google Pay Redirect > APIs > Session', 'api-googlepay', 'Google Pay redirect — create session', 'Create a hosted Google Pay session for an existing customer.'],
-  ['Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Google Pay (Seamless) > APIs > Get Status', 'api-googlepay', 'Google Pay seamless — get status', 'Retrieve the latest seamless Google Pay purchase state.'],
-  ['Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay (Seamless) > APIs > Purchases (Decrypted Flow)', 'api-applepay', 'Apple Pay seamless — decrypted flow', 'Create a purchase using the decrypted Apple Pay payload contract.'],
+  ['Payment Methods > 🌎 Google Pay (Seamless) > APIs > Get Status', 'api-googlepay', 'Google Pay seamless — get status', 'Retrieve the latest seamless Google Pay purchase state.'],
+  ['Payment Methods > 🌎 Apple Pay (Seamless) > APIs > Purchases (Decrypted Flow)', 'api-applepay', 'Apple Pay seamless — decrypted flow', 'Create a purchase using the decrypted Apple Pay payload contract.'],
   ['Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay Redirect > APIs > Session', 'api-applepay', 'Apple Pay redirect — create session', 'Create a hosted Apple Pay session for an existing customer.'],
   ['Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay Redirect > APIs > Get Status', 'api-applepay', 'Apple Pay redirect — get status', 'Retrieve the latest redirect Apple Pay purchase state.'],
-  ['Payment Methods > 💰 APMs (Alternative Payment Methods) > 🌎 Apple Pay (Seamless) > APIs > Get Status', 'api-applepay', 'Get Apple Pay purchase status', 'Retrieve the latest Apple Pay purchase state.'],
-  ['Payout Manual Review > List Payouts', 'api-payout-review', 'List payouts pending manual review', 'Retrieve payouts using the filters in the live collection.'],
-  ['Payout Manual Review > Approve Payout', 'api-payout-review', 'Approve payout without remarks', 'Approve a payout without submitting a remarks body.'],
-  ['Payout Manual Review > Reject Payout', 'api-payout-review', 'Reject payout without remarks', 'Reject a payout without submitting a remarks body.'],
+  ['Payment Methods > 🌎 Apple Pay (Seamless) > APIs > Get Status', 'api-applepay', 'Get Apple Pay purchase status', 'Retrieve the latest Apple Pay purchase state.'],
+  ['Payout Manual Review > Approve Payout', 'api-payout-review', 'Approve payout', 'Approve a payout that is pending manual review.', 'live-collection-14'],
+  ['Payout Manual Review > Reject Payout', 'api-payout-review', 'Reject payout', 'Reject a payout that is pending manual review.', 'live-collection-15'],
 ];
 
 function addendumUrl(request) {
@@ -551,7 +557,7 @@ function addendumUrl(request) {
 }
 
 if (writeAddendaMode) {
-  const addenda = addendumSpecs.map(([location, slug, title, description], index) => {
+  const addenda = addendumSpecs.map(([location, slug, title, description, stableId], index) => {
     const request = postmanRequests.find((candidate) => candidate.location === location);
     if (!request) throw new Error(`Addendum source not found: ${location}`);
     const success = selectSuccessResponse(request.responses);
@@ -571,9 +577,18 @@ if (writeAddendaMode) {
       config.errorStatus = formattedStatus(error, '400 Bad Request');
       config.errorResponse = sanitizedExample(error.parsed);
     }
+    const missingExamples = [];
+    if (!config.status || config.response === undefined) missingExamples.push('success');
+    if (!config.errorStatus || config.errorResponse === undefined) missingExamples.push('error');
+    if (missingExamples.length) {
+      config.sourceExampleGap = {
+        missing: missingExamples,
+        reason: 'The merchant-facing Postman request does not contain a valid saved response with HTTP status metadata; no response was inferred.',
+      };
+    }
     return {
       slug,
-      id: `live-collection-${index + 1}`,
+      id: stableId || `live-collection-${index + 1}`,
       title,
       description,
       source: location,
