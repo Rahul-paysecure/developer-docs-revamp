@@ -76,13 +76,11 @@ export const NAV_API = [
       { t: 'Cancel', h: '/api-reference#capture', i: 'xcircle' },
       { t: 'Refund', h: '/api-reference#refund', i: 'rotate' }
     ]},
-    { label: 'Payment Methods', items: [
+    { label: 'Payment Methods', collapsibleCategories: true, items: [
       { t: 'Cards (S2S)', h: '/api-cards', i: 'card', category: 'Cards' },
       { t: '2D processing', h: '/api-cards#twod-flow', i: 'send', sub: true },
       { t: '3D processing', h: '/api-cards#threeds-sequence', i: 'shield', sub: true },
       { t: 'PayOut (OCT)', h: '/api-cards#card-payout', i: 'send', sub: true },
-      { t: 'Virtual Cards Payout', h: '/api-virtual-cards-payout', i: 'card' },
-      { t: 'PayOut', h: '/api-virtual-cards-payout#create-payout', i: 'send', sub: true },
       { t: 'Google Pay', h: '/api-googlepay', i: 'wallet', category: 'APMs', subcategory: 'Wallets' },
       { t: 'PayIn', h: '/api-googlepay#redirect', i: 'coins', sub: true },
       { t: 'Apple Pay', h: '/api-applepay', i: 'wallet' },
@@ -91,6 +89,8 @@ export const NAV_API = [
       { t: 'PayIn', h: '/api-paypal#payin', i: 'coins', sub: true },
       { t: 'Skrill', h: '/api-skrill', i: 'wallet' },
       { t: 'PayIn', h: '/api-skrill#payin', i: 'coins', sub: true },
+      { t: 'Virtual Cards Payout', h: '/api-virtual-cards-payout', i: 'card', subcategory: 'Virtual cards' },
+      { t: 'PayOut', h: '/api-virtual-cards-payout#create-payout', i: 'send', sub: true },
       { t: 'Interac e-Transfer', h: '/api-interac-etransfer', i: 'bank', subcategory: 'Open banking & transfers' },
       { t: 'PayIn', h: '/api-interac-etransfer#payin', i: 'coins', sub: true },
       { t: 'PayOut', h: '/api-interac-etransfer#payout', i: 'send', sub: true },
@@ -140,9 +140,7 @@ export const NAV_API = [
       { t: 'Pay with Crypto', h: '/api-pay-with-crypto', i: 'crypto' },
       { t: 'PayIn', h: '/api-pay-with-crypto#payin', i: 'coins', sub: true },
       { t: 'On Ramp (crypto)', h: '/api-onramp', i: 'crypto' },
-      { t: 'PayIn', h: '/api-onramp#payin', i: 'coins', sub: true },
-      { t: 'Bank & local APMs', h: '/api-apms', i: 'globe', category: 'Explore' },
-      { t: 'Crypto & on-ramp', h: '/api-crypto', i: 'crypto' }
+      { t: 'PayIn', h: '/api-onramp#payin', i: 'coins', sub: true }
     ]},
     { label: 'Features', items: [
       { t: 'Recurring & mandates', h: '/api-recurring', i: 'repeat' },
