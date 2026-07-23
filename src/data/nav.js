@@ -16,7 +16,7 @@ export const NAV_GUIDES = [
     { label: 'Products', items: [
       { t: 'Payments', h: '/product-payments', i: 'coins' },
       { t: 'Payouts', h: '/product-payouts', i: 'send' },
-      { t: 'Payment methods overview', h: '/payment-methods', i: 'globe' },
+      { t: 'Payment Methods', h: '/payment-methods', i: 'globe' },
       { t: 'Cashier', h: '/product-cashier', i: 'cart' },
       { t: 'Tokenisation', h: '/product-tokenisation', i: 'token' },
       { t: 'Save a Card', h: '/save-a-card', i: 'card', sub: true },
