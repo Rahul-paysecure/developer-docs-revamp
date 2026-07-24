@@ -47,10 +47,16 @@ All page copy lives in structured records under `src/content/pages/` or
 - Keep `TryIt` request fields and response examples structured.
 - Do not infer endpoint paths, request fields, enum values, or response data.
 
-The current Admin content editor is a local preview tool. Its Save action writes
-to the current browser only. Until the Git-backed adapter is enabled, exported
-editor changes must be applied to the structured source by a repository
-maintainer.
+In local development, the Admin content editor saves previews in the current
+browser. In production, open the page with `?admin=1` and authenticate through
+company SSO. **Create pull request** writes a stable-field override to a
+short-lived branch and returns the GitHub pull request and Netlify Deploy
+Preview. It never writes directly to `main`.
+
+Do not hand-edit `src/content/editor-field-index.json`. When structured fields
+are intentionally added or removed, run `npm run editor:index` and review the
+generated diff. Committed page overrides live in
+`src/content/overrides/<slug>.json`.
 
 ## Required verification
 
@@ -63,7 +69,7 @@ npm run build
 
 The checks enforce structured-document coverage, stable IDs, routes, media,
 interactive requests, Brand ID placement, cURL behavior, editor persistence,
-and production compilation.
+Git editor authentication and conflict contracts, and production compilation.
 
 When a fresh merchant-facing Postman export is available, API changes also
 require strict parity verification:

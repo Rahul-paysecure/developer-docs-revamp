@@ -5,6 +5,7 @@ import {
   CONTENT_SAVED_EVENT,
   contentRepository,
 } from '../content/contentRepository.js';
+import { getPublishedOverrides } from '../content/publishedOverrides.js';
 import { StructuredEditorContext } from '../content/StructuredEditorContext.js';
 
 function comparable(changes = {}) {
@@ -77,14 +78,18 @@ function savedLabel(record) {
 
 export default function EditablePageContent({ slug, Page }) {
   const [savedRecord, setSavedRecord] = useState(null);
+  const [session, setSession] = useState(null);
   const [editing, setEditing] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [resetToken, setResetToken] = useState(0);
   const [message, setMessage] = useState(`Update ${slug} documentation`);
   const [status, setStatus] = useState('');
+  const [submission, setSubmission] = useState(null);
   const [saving, setSaving] = useState(false);
   const draftRef = useRef({});
   const originalsRef = useRef({});
+  const publishedOverrides = getPublishedOverrides(slug);
+  const isGitEditor = contentRepository.kind === 'git-pull-request';
 
   const editorAvailable =
     import.meta.env.DEV ||
@@ -92,10 +97,25 @@ export default function EditablePageContent({ slug, Page }) {
 
   useEffect(() => {
     let active = true;
+    if (!editorAvailable) return undefined;
     setStatus('');
+    setSubmission(null);
+    const returnTo =
+      typeof window === 'undefined'
+        ? `/${slug}?admin=1`
+        : `${window.location.pathname}${window.location.search}`;
     contentRepository
-      .getPage(slug)
-      .then((record) => {
+      .getSession(returnTo)
+      .then(async (nextSession) => {
+        if (!active) return;
+        setSession(nextSession);
+        if (!nextSession.authenticated) {
+          setSavedRecord(null);
+          draftRef.current = {};
+          setStatus(nextSession.message || '');
+          return;
+        }
+        const record = await contentRepository.getPage(slug);
         if (!active) return;
         setSavedRecord(record);
         draftRef.current = { ...(record?.changes || {}) };
@@ -106,7 +126,7 @@ export default function EditablePageContent({ slug, Page }) {
     return () => {
       active = false;
     };
-  }, [slug]);
+  }, [editorAvailable, slug]);
 
   const handleChange = useCallback(
     (editKey, value) => {
@@ -122,6 +142,7 @@ export default function EditablePageContent({ slug, Page }) {
     draftRef.current = { ...(savedRecord?.changes || {}) };
     setDirty(false);
     setStatus('');
+    setSubmission(null);
     setResetToken((value) => value + 1);
     setEditing(true);
   };
@@ -144,16 +165,41 @@ export default function EditablePageContent({ slug, Page }) {
           ([key, value]) => currentKeys.has(key) && value !== originalsRef.current[key]
         )
       );
-      const record = await contentRepository.savePage({ slug, changes, message });
+      const record = await contentRepository.savePage({
+        slug,
+        changes,
+        message,
+        baseRevision: savedRecord?.baseRevision,
+        pageRevision: savedRecord?.pageRevision,
+      });
       draftRef.current = { ...(record?.changes || {}) };
       setSavedRecord(record);
       setDirty(false);
       setEditing(false);
-      setStatus(record ? 'Saved locally in this browser.' : 'Local override removed.');
+      setSubmission(record?.pullRequest ? record : null);
+      setStatus(
+        isGitEditor
+          ? 'Pull request created. Review the Deploy Preview before requesting approval.'
+          : record
+            ? 'Saved locally in this browser.'
+            : 'Local override removed.'
+      );
       setResetToken((value) => value + 1);
       notifyContentSaved(slug);
     } catch (error) {
       setStatus(error.message);
+      if (isGitEditor && error.status === 401) {
+        const returnTo =
+          typeof window === 'undefined'
+            ? `/${slug}?admin=1`
+            : `${window.location.pathname}${window.location.search}`;
+        try {
+          setSession(await contentRepository.getSession(returnTo));
+          setEditing(false);
+        } catch {
+          // Keep the original authentication error visible.
+        }
+      }
     } finally {
       setSaving(false);
     }
@@ -197,19 +243,44 @@ export default function EditablePageContent({ slug, Page }) {
     }
   };
 
+  const logout = async () => {
+    setSaving(true);
+    try {
+      await contentRepository.logout();
+      const returnTo =
+        typeof window === 'undefined'
+          ? `/${slug}?admin=1`
+          : `${window.location.pathname}${window.location.search}`;
+      setSession(await contentRepository.getSession(returnTo));
+      setSavedRecord(null);
+      setEditing(false);
+      setDirty(false);
+      setStatus('Signed out of the content editor.');
+    } catch (error) {
+      setStatus(error.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const pageTree = Page({});
   const addendaTree = PostmanAddenda({ slug });
   originalsRef.current = {};
 
   const structuredEditor = {
     registerOriginal(id, original) {
-      originalsRef.current[`field/${id}`] = original;
+      const editKey = `field/${id}`;
+      originalsRef.current[editKey] = Object.prototype.hasOwnProperty.call(publishedOverrides, editKey)
+        ? publishedOverrides[editKey]
+        : original;
     },
     renderText(id, original) {
       const editKey = `field/${id}`;
       const value = Object.prototype.hasOwnProperty.call(draftRef.current, editKey)
         ? draftRef.current[editKey]
-        : original;
+        : Object.prototype.hasOwnProperty.call(publishedOverrides, editKey)
+          ? publishedOverrides[editKey]
+          : original;
       return (
         <EditableText
           editKey={editKey}
@@ -230,29 +301,59 @@ export default function EditablePageContent({ slug, Page }) {
             <div className="doc-editor-title">
               <span className="doc-editor-icon" aria-hidden="true">✎</span>
               <span>
-                <strong>Admin content editor</strong>
-                <small>Local browser preview - not access controlled</small>
+                <strong>{isGitEditor ? 'Git-backed content editor' : 'Admin content editor'}</strong>
+                <small>
+                  {isGitEditor
+                    ? session?.authenticated
+                      ? `Signed in as ${session.user?.email || session.user?.name}`
+                      : 'Company SSO and reviewed pull requests'
+                    : 'Local browser preview - not access controlled'}
+                </small>
               </span>
             </div>
             <div className="doc-editor-badges">
-              {savedRecord && <span className="doc-editor-badge saved">Local override</span>}
+              {!isGitEditor && savedRecord && <span className="doc-editor-badge saved">Local override</span>}
+              {isGitEditor && savedRecord?.baseRevision && (
+                <span className="doc-editor-badge revision">
+                  main {savedRecord.baseRevision.slice(0, 7)}
+                </span>
+              )}
               {dirty && <span className="doc-editor-badge dirty">Unsaved changes</span>}
             </div>
             <div className="doc-editor-actions">
-              {!editing ? (
-                <button type="button" className="primary" onClick={startEditing}>Edit this page</button>
+              {isGitEditor && !session?.authenticated ? (
+                <button
+                  type="button"
+                  className="primary"
+                  disabled={!session?.configured}
+                  onClick={() => contentRepository.login(session?.loginUrl)}
+                >
+                  Sign in with company SSO
+                </button>
+              ) : !editing ? (
+                <button
+                  type="button"
+                  className="primary"
+                  disabled={Boolean(submission)}
+                  onClick={startEditing}
+                >
+                  {submission ? 'Pull request created' : 'Edit this page'}
+                </button>
               ) : (
                 <>
                   <button type="button" className="primary" disabled={saving || !dirty} onClick={saveChanges}>
-                    {saving ? 'Saving…' : 'Save locally'}
+                    {saving ? 'Submitting…' : isGitEditor ? 'Create pull request' : 'Save locally'}
                   </button>
                   <button type="button" disabled={saving} onClick={cancelEditing}>Cancel</button>
                 </>
               )}
-              {savedRecord && !editing && (
+              {!isGitEditor && savedRecord && !editing && (
                 <button type="button" disabled={saving} onClick={resetSavedPage}>Reset page</button>
               )}
-              {!editing && <button type="button" onClick={exportEdits}>Export edits</button>}
+              {!isGitEditor && !editing && <button type="button" onClick={exportEdits}>Export edits</button>}
+              {isGitEditor && session?.authenticated && !editing && (
+                <button type="button" disabled={saving} onClick={logout}>Sign out</button>
+              )}
             </div>
           </div>
           {editing && (
@@ -263,16 +364,40 @@ export default function EditablePageContent({ slug, Page }) {
                 onChange={(event) => setMessage(event.target.value)}
                 placeholder={`Update ${slug} documentation`}
               />
-              <small>This becomes the Git commit message when the Git adapter is connected.</small>
+              <small>
+                {isGitEditor
+                  ? 'This becomes the Git commit and pull-request title.'
+                  : 'This becomes the Git commit message when the Git adapter is connected.'}
+              </small>
             </label>
           )}
           <div className="doc-editor-status" aria-live="polite">
             {editing
               ? 'Click highlighted text to edit it. Press Enter to finish a field; use Shift+Enter for a line break.'
-              : savedRecord
-                ? `Saved locally ${savedLabel(savedRecord)}${status ? ` · ${status}` : ''}`
-                : status || 'No local edits are saved for this page.'}
+              : isGitEditor
+                ? status || (
+                  session?.authenticated
+                    ? 'Edits create a branch and pull request; they are published only after review and merge.'
+                    : session?.configured === false
+                      ? 'The editor must be configured in Netlify before contributors can sign in.'
+                      : 'Sign in to create a reviewed documentation change.'
+                )
+                : savedRecord
+                  ? `Saved locally ${savedLabel(savedRecord)}${status ? ` · ${status}` : ''}`
+                  : status || 'No local edits are saved for this page.'}
           </div>
+          {submission && (
+            <div className="doc-editor-submission">
+              <strong>Ready for review</strong>
+              <span>Pull request #{submission.pullRequest.number} was created from {submission.branch}.</span>
+              <div>
+                <a href={submission.pullRequest.url} target="_blank" rel="noreferrer">Open pull request</a>
+                {submission.previewUrl && (
+                  <a href={submission.previewUrl} target="_blank" rel="noreferrer">Open Deploy Preview</a>
+                )}
+              </div>
+            </div>
+          )}
         </section>
       )}
       <StructuredEditorContext.Provider value={structuredEditor}>

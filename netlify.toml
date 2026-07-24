@@ -6,6 +6,9 @@
   NODE_VERSION = "22"
   NPM_VERSION = "10"
 
+[functions]
+  node_bundler = "esbuild"
+
 [context.deploy-preview]
   command = "npm run verify && npm run build"
 
